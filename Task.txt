@@ -1,0 +1,124 @@
+Create a complete, production-ready website called "myexams.org", designed for GCSE revision for students, using:
+
+Frontend: React + Bootstrap (mobile responsive, clean design, dark/light mode toggle).
+
+Backend: Node.js + Express.
+
+Database: MongoDB (or PostgreSQL if relational structure is better).
+
+
+Requirements:
+
+1. Subjects & Pages
+
+Fully completed revision pages for:
+
+Maths
+
+Sciences (Biology, Chemistry, Physics)
+
+English Literature
+
+English Language
+
+Geography
+
+Geology
+
+Computer Science
+
+Religious Education (RE)
+
+History
+
+
+Each subject must include structured topic pages covering the full GCSE syllabus with:
+
+Clear explanations
+
+Worked examples
+
+Practice questions
+
+Summaries
+
+
+
+
+2. Randomly Generated Tests
+
+Every subject/topic must have a random test generator that pulls from a question bank stored in the database.
+
+Questions should include multiple-choice, short answer, and longer written responses.
+
+Provide instant feedback with correct answers, explanations, and scoring.
+
+Allow students to retake tests with different randomized sets.
+
+
+
+3. Secure Login System
+
+Secure user registration and login system with hashed + salted passwords (e.g., bcrypt).
+
+Student dashboard showing:
+
+Progress tracking (scores, weak areas, completed topics).
+
+Saved notes.
+
+Test history and improvements over time.
+
+
+
+
+4. Design & Usability
+
+Use Bootstrap components for layout, forms, navigation bar, cards, and modals.
+
+Responsive design with a modern, clean UI.
+
+Simple subject navigation menu.
+
+Dark/light mode toggle.
+
+
+
+5. Technical Setup
+
+Organize React code into reusable components (Navbar, SubjectPage, Dashboard, TestGenerator, etc.).
+
+API routes in Node.js/Express for:
+
+User authentication (JWT-based).
+
+Fetching subjects, topics, and questions.
+
+Saving test results & progress.
+
+
+MongoDB/SQL schema for:
+
+Users (profile, progress, notes, test history).
+
+Subjects, topics, and question bank.
+
+Test results and analytics.
+
+
+Secure backend with protection against SQL injection, XSS, CSRF.
+
+
+
+6. Deliverables
+
+Full React + Bootstrap frontend with completed subject pages.
+
+Express backend with working API endpoints.
+
+Database schema pre-filled with GCSE questions for all subjects.
+
+Secure login + JWT authentication.
+
+Functional revision system with random test generation, scoring, and progress tracking.
+
