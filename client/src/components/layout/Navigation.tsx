@@ -1,12 +1,12 @@
 import React from 'react';
-import { Navbar, Nav, NavDropdown, Container, Button } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 
 const Navigation: React.FC = () => {
   const { user, logout } = useAuth();
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -62,14 +62,6 @@ const Navigation: React.FC = () => {
           </Nav>
           
           <Nav>
-            <Button
-              variant="outline-secondary"
-              size="sm"
-              onClick={toggleTheme}
-              className="me-2"
-            >
-              {theme === 'light' ? '🌙' : '☀️'}
-            </Button>
             
             {user ? (
               <NavDropdown title={`Hi, ${user.firstName}`} id="user-dropdown" align="end">

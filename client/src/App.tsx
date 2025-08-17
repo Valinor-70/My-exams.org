@@ -5,7 +5,10 @@ import Navigation from './components/layout/Navigation';
 import Home from './pages/Home';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
+import Dashboard from './pages/Dashboard';
+import SubjectPage from './pages/SubjectPage';
 import './App.css';
+import './styles/animations.css';
 
 function App() {
   return (
@@ -18,6 +21,8 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/subjects/:subjectCode" element={<SubjectPage />} />
               {/* More routes will be added here */}
             </Routes>
           </main>
