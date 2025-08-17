@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button, Badge, Modal } from 'react-bootstrap';
+import { Container, Row, Col, Card, Badge, Modal } from 'react-bootstrap';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -261,14 +261,12 @@ const SubjectPage: React.FC = () => {
                   {selectedScienceType} Science
                 </Badge>
               )}
-              <Button
-                variant="outline-secondary"
-                size="sm"
-                className="ms-2"
+              <button
+                className="btn btn-outline-secondary btn-sm ms-2"
                 onClick={() => setShowExamBoardModal(true)}
               >
                 Change
-              </Button>
+              </button>
             </div>
           )}
         </motion.div>
@@ -335,22 +333,20 @@ const SubjectPage: React.FC = () => {
                       
                       <div className="d-grid gap-2">
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                          <Button 
-                            variant="primary" 
-                            className="btn-3d"
+                          <button 
+                            className="btn btn-primary btn-3d"
                             onClick={() => navigate(`/topics/${topic.id}/study`)}
                           >
                             📖 Study Topic
-                          </Button>
+                          </button>
                         </motion.div>
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                          <Button 
-                            variant="outline-primary" 
-                            className="btn-3d"
+                          <button 
+                            className="btn btn-outline-primary btn-3d"
                             onClick={() => navigate(`/topics/${topic.id}/test`)}
                           >
                             🎯 Take Test
-                          </Button>
+                          </button>
                         </motion.div>
                       </div>
                     </Card.Body>
@@ -376,46 +372,42 @@ const SubjectPage: React.FC = () => {
                   <Row className="g-3">
                     <Col md={3}>
                       <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                        <Button 
-                          variant="primary" 
-                          className="w-100 btn-3d"
+                        <button 
+                          className="btn btn-primary w-100 btn-3d"
                           onClick={() => navigate(`/subjects/${subjectCode}/test`)}
                         >
                           🎲 Random Test
-                        </Button>
+                        </button>
                       </motion.div>
                     </Col>
                     <Col md={3}>
                       <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                        <Button 
-                          variant="outline-success" 
-                          className="w-100 btn-3d"
+                        <button 
+                          className="btn btn-outline-success w-100 btn-3d"
                           onClick={() => navigate(`/subjects/${subjectCode}/notes`)}
                         >
                           📝 My Notes
-                        </Button>
+                        </button>
                       </motion.div>
                     </Col>
                     <Col md={3}>
                       <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                        <Button 
-                          variant="outline-warning" 
-                          className="w-100 btn-3d"
+                        <button 
+                          className="btn btn-outline-warning w-100 btn-3d"
                           onClick={() => navigate(`/subjects/${subjectCode}/progress`)}
                         >
                           📊 View Progress
-                        </Button>
+                        </button>
                       </motion.div>
                     </Col>
                     <Col md={3}>
                       <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                        <Button 
-                          variant="outline-info" 
-                          className="w-100 btn-3d"
+                        <button 
+                          className="btn btn-outline-info w-100 btn-3d"
                           onClick={() => navigate('/dashboard')}
                         >
                           🏠 Dashboard
-                        </Button>
+                        </button>
                       </motion.div>
                     </Col>
                   </Row>
@@ -507,14 +499,13 @@ const SubjectPage: React.FC = () => {
                   </div>
                 </div>
                 <div className="d-grid">
-                  <Button
-                    variant="primary"
-                    className="btn-3d"
+                  <button
+                    className="btn btn-primary btn-3d"
                     onClick={() => handleScienceTypeSelect(selectedScienceType)}
                     disabled={!selectedScienceType}
                   >
                     Continue with {selectedScienceType} Science
-                  </Button>
+                  </button>
                 </div>
               </Modal.Body>
             </motion.div>
