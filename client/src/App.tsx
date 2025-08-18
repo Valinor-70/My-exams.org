@@ -7,6 +7,8 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Dashboard from './pages/Dashboard';
 import SubjectPage from './pages/SubjectPage';
+import TestPage from './components/test/TestPage';
+import FlashcardPage from './components/test/FlashcardPage';
 import './App.css';
 import './styles/study-theme.css';
 
@@ -24,6 +26,10 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/subjects" element={<Navigate to="/dashboard" replace />} />
               <Route path="/subjects/:subjectCode" element={<SubjectPage />} />
+              <Route path="/test/:subjectCode" element={<TestPage />} />
+              <Route path="/test/:subjectCode/:topicId" element={<TestPage />} />
+              <Route path="/flashcards/:subjectCode" element={<FlashcardPage />} />
+              <Route path="/flashcards/:subjectCode/:topicId" element={<FlashcardPage />} />
               {/* More routes will be added here */}
             </Routes>
           </main>

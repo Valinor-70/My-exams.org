@@ -72,14 +72,14 @@ const SubjectPage: React.FC = () => {
       description: 'Study forces, energy, waves and matter',
       isScience: true
     },
-    'english-lit': {
+    'english-literature': {
       name: 'English Literature',
       icon: '📚',
       color: '#f5576c',
       description: 'Analyze texts, poetry and dramatic works',
       isScience: false
     },
-    'english-lang': {
+    'english-language': {
       name: 'English Language',
       icon: '✍️',
       color: '#4ecdc4',
@@ -95,7 +95,7 @@ const SubjectPage: React.FC = () => {
     },
     'geology': {
       name: 'Geology',
-      icon: '🏔️',
+      icon: '🗿',
       color: '#8b5a3c',
       description: 'Understand Earth processes and rocks',
       isScience: false
@@ -109,7 +109,7 @@ const SubjectPage: React.FC = () => {
     },
     'religious-education': {
       name: 'Religious Education',
-      icon: '✝️',
+      icon: '🕊️',
       color: '#fdcb6e',
       description: 'Explore world religions and ethics',
       isScience: false
@@ -125,37 +125,120 @@ const SubjectPage: React.FC = () => {
 
   const currentSubject = subjectCode ? subjects[subjectCode as keyof typeof subjects] : null;
 
-  // Mock topics data
-  const [topics] = useState<Topic[]>([
-    { id: '1', name: 'Number Systems', description: 'Natural numbers, integers, rational numbers', difficulty: 'Beginner', progress: 85, questions: 45 },
-    { id: '2', name: 'Algebraic Expressions', description: 'Variables, coefficients, and simplification', difficulty: 'Intermediate', progress: 60, questions: 38 },
-    { id: '3', name: 'Quadratic Equations', description: 'Solving quadratic equations using various methods', difficulty: 'Advanced', progress: 30, questions: 52 },
-    { id: '4', name: 'Coordinate Geometry', description: 'Points, lines, and curves on coordinate plane', difficulty: 'Intermediate', progress: 70, questions: 41 },
-    { id: '5', name: 'Trigonometry', description: 'Sin, cos, tan and their applications', difficulty: 'Advanced', progress: 45, questions: 35 },
-    { id: '6', name: 'Statistics', description: 'Data collection, analysis and probability', difficulty: 'Beginner', progress: 90, questions: 29 },
-  ]);
+  // Subject-specific topics data
+  const getTopicsForSubject = (subjectCode: string): Topic[] => {
+    const topicsMap: { [key: string]: Topic[] } = {
+      'mathematics': [
+        { id: '1', name: 'Number Systems', description: 'Natural numbers, integers, rational numbers', difficulty: 'Beginner', progress: user ? 85 : 0, questions: 45 },
+        { id: '2', name: 'Algebraic Expressions', description: 'Variables, coefficients, and simplification', difficulty: 'Intermediate', progress: user ? 60 : 0, questions: 38 },
+        { id: '3', name: 'Quadratic Equations', description: 'Solving quadratic equations using various methods', difficulty: 'Advanced', progress: user ? 30 : 0, questions: 52 },
+        { id: '4', name: 'Coordinate Geometry', description: 'Points, lines, and curves on coordinate plane', difficulty: 'Intermediate', progress: user ? 70 : 0, questions: 41 },
+        { id: '5', name: 'Trigonometry', description: 'Sin, cos, tan and their applications', difficulty: 'Advanced', progress: user ? 45 : 0, questions: 35 },
+        { id: '6', name: 'Statistics', description: 'Data collection, analysis and probability', difficulty: 'Beginner', progress: user ? 90 : 0, questions: 29 },
+      ],
+      'biology': [
+        { id: '1', name: 'Cell Structure', description: 'Animal, plant and bacterial cells', difficulty: 'Beginner', progress: user ? 75 : 0, questions: 42 },
+        { id: '2', name: 'Genetics', description: 'DNA, genes, chromosomes and inheritance', difficulty: 'Intermediate', progress: user ? 65 : 0, questions: 38 },
+        { id: '3', name: 'Evolution', description: 'Natural selection and adaptation', difficulty: 'Advanced', progress: user ? 50 : 0, questions: 35 },
+        { id: '4', name: 'Ecosystems', description: 'Food chains, cycles and biodiversity', difficulty: 'Intermediate', progress: user ? 80 : 0, questions: 47 },
+        { id: '5', name: 'Human Biology', description: 'Body systems and homeostasis', difficulty: 'Advanced', progress: user ? 40 : 0, questions: 52 },
+        { id: '6', name: 'Plant Biology', description: 'Photosynthesis and plant transport', difficulty: 'Intermediate', progress: user ? 70 : 0, questions: 33 },
+      ],
+      'chemistry': [
+        { id: '1', name: 'Atomic Structure', description: 'Atoms, elements and periodic table', difficulty: 'Beginner', progress: user ? 85 : 0, questions: 40 },
+        { id: '2', name: 'Chemical Bonding', description: 'Ionic, covalent and metallic bonds', difficulty: 'Intermediate', progress: user ? 55 : 0, questions: 45 },
+        { id: '3', name: 'Chemical Reactions', description: 'Types of reactions and equations', difficulty: 'Intermediate', progress: user ? 60 : 0, questions: 50 },
+        { id: '4', name: 'Acids and Bases', description: 'pH, neutralization and salts', difficulty: 'Advanced', progress: user ? 35 : 0, questions: 38 },
+        { id: '5', name: 'Organic Chemistry', description: 'Carbon compounds and polymers', difficulty: 'Advanced', progress: user ? 45 : 0, questions: 42 },
+        { id: '6', name: 'Energy Changes', description: 'Exothermic and endothermic reactions', difficulty: 'Intermediate', progress: user ? 70 : 0, questions: 30 },
+      ],
+      'physics': [
+        { id: '1', name: 'Forces and Motion', description: 'Newton\'s laws and kinematics', difficulty: 'Beginner', progress: user ? 80 : 0, questions: 48 },
+        { id: '2', name: 'Energy', description: 'Work, power and conservation of energy', difficulty: 'Intermediate', progress: user ? 65 : 0, questions: 44 },
+        { id: '3', name: 'Waves', description: 'Sound, light and electromagnetic spectrum', difficulty: 'Advanced', progress: user ? 50 : 0, questions: 36 },
+        { id: '4', name: 'Electricity', description: 'Current, voltage and resistance', difficulty: 'Intermediate', progress: user ? 75 : 0, questions: 52 },
+        { id: '5', name: 'Magnetism', description: 'Magnetic fields and electromagnetism', difficulty: 'Advanced', progress: user ? 40 : 0, questions: 34 },
+        { id: '6', name: 'Atomic Physics', description: 'Radioactivity and nuclear physics', difficulty: 'Advanced', progress: user ? 30 : 0, questions: 28 },
+      ],
+      'english-literature': [
+        { id: '1', name: 'Poetry Analysis', description: 'Techniques, themes and interpretation', difficulty: 'Intermediate', progress: user ? 70 : 0, questions: 35 },
+        { id: '2', name: 'Shakespeare', description: 'Plays, characters and language', difficulty: 'Advanced', progress: user ? 55 : 0, questions: 42 },
+        { id: '3', name: 'Modern Prose', description: '19th and 20th century novels', difficulty: 'Intermediate', progress: user ? 80 : 0, questions: 38 },
+        { id: '4', name: 'Drama', description: 'Modern and contemporary plays', difficulty: 'Advanced', progress: user ? 45 : 0, questions: 33 },
+        { id: '5', name: 'Literary Techniques', description: 'Language devices and structure', difficulty: 'Beginner', progress: user ? 90 : 0, questions: 40 },
+        { id: '6', name: 'Context and Themes', description: 'Historical and social contexts', difficulty: 'Intermediate', progress: user ? 65 : 0, questions: 30 },
+      ],
+      'english-language': [
+        { id: '1', name: 'Reading Comprehension', description: 'Understanding texts and inference', difficulty: 'Beginner', progress: user ? 85 : 0, questions: 45 },
+        { id: '2', name: 'Creative Writing', description: 'Descriptive and narrative writing', difficulty: 'Intermediate', progress: user ? 70 : 0, questions: 25 },
+        { id: '3', name: 'Transactional Writing', description: 'Letters, articles and speeches', difficulty: 'Intermediate', progress: user ? 75 : 0, questions: 30 },
+        { id: '4', name: 'Language Analysis', description: 'Writer\'s methods and effects', difficulty: 'Advanced', progress: user ? 50 : 0, questions: 35 },
+        { id: '5', name: 'Grammar and Punctuation', description: 'Sentence structure and accuracy', difficulty: 'Beginner', progress: user ? 95 : 0, questions: 50 },
+        { id: '6', name: 'Speaking and Listening', description: 'Presentations and discussions', difficulty: 'Intermediate', progress: user ? 60 : 0, questions: 20 },
+      ],
+      'geography': [
+        { id: '1', name: 'Physical Geography', description: 'Landscapes, weather and climate', difficulty: 'Beginner', progress: user ? 75 : 0, questions: 44 },
+        { id: '2', name: 'Human Geography', description: 'Population, settlement and economics', difficulty: 'Intermediate', progress: user ? 60 : 0, questions: 40 },
+        { id: '3', name: 'Environmental Issues', description: 'Climate change and sustainability', difficulty: 'Advanced', progress: user ? 45 : 0, questions: 36 },
+        { id: '4', name: 'Map Skills', description: 'OS maps, coordinates and scale', difficulty: 'Beginner', progress: user ? 85 : 0, questions: 32 },
+        { id: '5', name: 'Case Studies', description: 'Real-world examples and analysis', difficulty: 'Advanced', progress: user ? 35 : 0, questions: 28 },
+        { id: '6', name: 'Fieldwork', description: 'Data collection and analysis techniques', difficulty: 'Intermediate', progress: user ? 70 : 0, questions: 25 },
+      ],
+      'geology': [
+        { id: '1', name: 'Rock Types', description: 'Igneous, sedimentary and metamorphic rocks', difficulty: 'Beginner', progress: user ? 80 : 0, questions: 38 },
+        { id: '2', name: 'Earth Structure', description: 'Crust, mantle and core composition', difficulty: 'Intermediate', progress: user ? 65 : 0, questions: 42 },
+        { id: '3', name: 'Plate Tectonics', description: 'Continental drift and earthquakes', difficulty: 'Advanced', progress: user ? 50 : 0, questions: 35 },
+        { id: '4', name: 'Minerals', description: 'Crystal structure and identification', difficulty: 'Intermediate', progress: user ? 70 : 0, questions: 40 },
+        { id: '5', name: 'Geological Time', description: 'Fossils and dating methods', difficulty: 'Advanced', progress: user ? 40 : 0, questions: 33 },
+        { id: '6', name: 'Weathering', description: 'Physical and chemical weathering processes', difficulty: 'Beginner', progress: user ? 85 : 0, questions: 30 },
+      ],
+      'computer-science': [
+        { id: '1', name: 'Programming Fundamentals', description: 'Variables, loops and functions', difficulty: 'Beginner', progress: user ? 90 : 0, questions: 55 },
+        { id: '2', name: 'Data Structures', description: 'Arrays, lists and searching', difficulty: 'Intermediate', progress: user ? 75 : 0, questions: 45 },
+        { id: '3', name: 'Algorithms', description: 'Sorting, searching and efficiency', difficulty: 'Advanced', progress: user ? 60 : 0, questions: 40 },
+        { id: '4', name: 'Computer Systems', description: 'Hardware, software and networks', difficulty: 'Intermediate', progress: user ? 80 : 0, questions: 50 },
+        { id: '5', name: 'Databases', description: 'SQL, normalization and design', difficulty: 'Advanced', progress: user ? 45 : 0, questions: 35 },
+        { id: '6', name: 'Cybersecurity', description: 'Threats, encryption and protection', difficulty: 'Advanced', progress: user ? 35 : 0, questions: 30 },
+      ],
+      'religious-education': [
+        { id: '1', name: 'Christianity', description: 'Beliefs, practices and traditions', difficulty: 'Beginner', progress: user ? 85 : 0, questions: 42 },
+        { id: '2', name: 'Islam', description: 'Five pillars and Islamic teachings', difficulty: 'Beginner', progress: user ? 80 : 0, questions: 38 },
+        { id: '3', name: 'Ethics and Morality', description: 'Right and wrong, moral dilemmas', difficulty: 'Intermediate', progress: user ? 65 : 0, questions: 35 },
+        { id: '4', name: 'Philosophy of Religion', description: 'Existence of God and meaning', difficulty: 'Advanced', progress: user ? 45 : 0, questions: 30 },
+        { id: '5', name: 'Life and Death', description: 'Afterlife beliefs and end of life', difficulty: 'Intermediate', progress: user ? 70 : 0, questions: 33 },
+        { id: '6', name: 'Peace and Conflict', description: 'War, forgiveness and justice', difficulty: 'Advanced', progress: user ? 40 : 0, questions: 28 },
+      ],
+      'history': [
+        { id: '1', name: 'Medieval England', description: '1066-1485: Normans to Tudors', difficulty: 'Beginner', progress: user ? 75 : 0, questions: 48 },
+        { id: '2', name: 'Tudor England', description: '1485-1603: Henry VIII to Elizabeth I', difficulty: 'Intermediate', progress: user ? 60 : 0, questions: 45 },
+        { id: '3', name: 'Industrial Revolution', description: '1750-1900: Social and economic change', difficulty: 'Advanced', progress: user ? 50 : 0, questions: 40 },
+        { id: '4', name: 'World War I', description: '1914-1918: Causes, events and consequences', difficulty: 'Intermediate', progress: user ? 80 : 0, questions: 52 },
+        { id: '5', name: 'World War II', description: '1939-1945: Global conflict and Holocaust', difficulty: 'Advanced', progress: user ? 55 : 0, questions: 55 },
+        { id: '6', name: 'Cold War', description: '1945-1991: USA vs USSR tensions', difficulty: 'Advanced', progress: user ? 35 : 0, questions: 38 },
+      ],
+    };
+
+    return topicsMap[subjectCode] || [];
+  };
+
+  const [topics] = useState<Topic[]>(getTopicsForSubject(subjectCode || ''));
 
   useEffect(() => {
-    if (!user) {
-      navigate('/login');
-      return;
-    }
-
     // Check if user needs to select exam board
     const userExamBoard = localStorage.getItem(`examBoard_${subjectCode}`);
-    if (!userExamBoard) {
+    if (!userExamBoard && user) {
       setShowExamBoardModal(true);
     } else {
-      setSelectedExamBoard(userExamBoard);
+      setSelectedExamBoard(userExamBoard || 'AQA'); // Default to AQA for guests
     }
 
     // Check for science subjects
     if (currentSubject?.isScience) {
       const userScienceType = localStorage.getItem(`scienceType_${subjectCode}`);
-      if (!userScienceType && userExamBoard) {
+      if (!userScienceType && userExamBoard && user) {
         setShowScienceTypeModal(true);
       } else {
-        setSelectedScienceType(userScienceType || '');
+        setSelectedScienceType(userScienceType || 'Double'); // Default to Double for guests
       }
     }
   }, [user, navigate, subjectCode, currentSubject]);
@@ -335,7 +418,7 @@ const SubjectPage: React.FC = () => {
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                           <button 
                             className="btn btn-primary btn-3d"
-                            onClick={() => navigate(`/topics/${topic.id}/study`)}
+                            onClick={() => navigate(`/flashcards/${subjectCode}/${topic.id}`)}
                           >
                             📖 Study Topic
                           </button>
@@ -343,7 +426,7 @@ const SubjectPage: React.FC = () => {
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                           <button 
                             className="btn btn-outline-primary btn-3d"
-                            onClick={() => navigate(`/topics/${topic.id}/test`)}
+                            onClick={() => navigate(`/test/${subjectCode}/${topic.id}`)}
                           >
                             🎯 Take Test
                           </button>
@@ -374,7 +457,7 @@ const SubjectPage: React.FC = () => {
                       <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                         <button 
                           className="btn btn-primary w-100 btn-3d"
-                          onClick={() => navigate(`/subjects/${subjectCode}/test`)}
+                          onClick={() => navigate(`/test/${subjectCode}`)}
                         >
                           🎲 Random Test
                         </button>
@@ -384,7 +467,7 @@ const SubjectPage: React.FC = () => {
                       <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                         <button 
                           className="btn btn-outline-success w-100 btn-3d"
-                          onClick={() => navigate(`/subjects/${subjectCode}/notes`)}
+                          onClick={() => navigate(`/flashcards/${subjectCode}`)}
                         >
                           📝 My Notes
                         </button>
