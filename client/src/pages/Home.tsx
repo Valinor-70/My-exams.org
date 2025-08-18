@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
@@ -23,7 +23,7 @@ const Home: React.FC = () => {
   }, []);
 
   const subjects = [
-    { name: 'Mathematics', code: 'maths', icon: '📊', description: 'Master numbers, algebra, geometry and more' },
+    { name: 'Mathematics', code: 'mathematics', icon: '📊', description: 'Master numbers, algebra, geometry and more' },
     { name: 'Biology', code: 'biology', icon: '🧬', description: 'Explore life, cells, genetics and ecosystems' },
     { name: 'Chemistry', code: 'chemistry', icon: '⚗️', description: 'Understand atoms, molecules and reactions' },
     { name: 'Physics', code: 'physics', icon: '⚡', description: 'Discover forces, energy and the universe' },
@@ -111,9 +111,8 @@ const Home: React.FC = () => {
                   {!user ? (
                     <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                       <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                        <Button 
-                          size="lg"
-                          className="btn-study"
+                        <button 
+                          className="btn btn-lg btn-study"
                           onClick={() => navigate('/login')}
                           style={{
                             padding: '15px 30px',
@@ -122,13 +121,11 @@ const Home: React.FC = () => {
                           }}
                         >
                           Enter
-                        </Button>
+                        </button>
                       </motion.div>
                       <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                        <Button 
-                          variant="outline-secondary"
-                          size="lg"
-                          className="btn-study"
+                        <button 
+                          className="btn btn-lg btn-outline-secondary btn-study"
                           onClick={() => navigate('/register')}
                           style={{
                             padding: '15px 30px',
@@ -139,14 +136,13 @@ const Home: React.FC = () => {
                           }}
                         >
                           Create account — housing is free
-                        </Button>
+                        </button>
                       </motion.div>
                     </div>
                   ) : (
                     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                      <Button 
-                        size="lg"
-                        className="btn-study"
+                      <button 
+                        className="btn btn-lg btn-study"
                         onClick={() => navigate('/dashboard')}
                         style={{
                           padding: '15px 30px',
@@ -155,7 +151,7 @@ const Home: React.FC = () => {
                         }}
                       >
                         Enter Your Study Studio
-                      </Button>
+                      </button>
                     </motion.div>
                   )}
                 </motion.div>
@@ -324,7 +320,7 @@ const Home: React.FC = () => {
                     <motion.div
                       className="study-door h-100" 
                       style={{ 
-                        cursor: (user || subject.code === 'geology') ? 'pointer' : 'default',
+                        cursor: 'pointer',
                         padding: '2rem 1.5rem',
                         minHeight: '200px',
                         display: 'flex',
@@ -333,7 +329,7 @@ const Home: React.FC = () => {
                         alignItems: 'center',
                         textAlign: 'center',
                       }}
-                      onClick={() => (user || subject.code === 'geology') && navigate(`/subjects/${subject.code}`)}
+                      onClick={() => navigate(`/subjects/${subject.code}`)}
                     >
                       {/* Room Status */}
                       <motion.div
@@ -344,15 +340,15 @@ const Home: React.FC = () => {
                           width: '12px',
                           height: '12px',
                           borderRadius: '50%',
-                          background: (user || subject.code === 'geology') ? 'var(--focus-orange)' : 'var(--soft-brown)',
-                          boxShadow: `0 0 10px ${(user || subject.code === 'geology') ? 'var(--focus-orange)' : 'var(--soft-brown)'}`,
+                          background: 'var(--focus-orange)',
+                          boxShadow: '0 0 10px var(--focus-orange)',
                         }}
                         animate={{
-                          opacity: (user || subject.code === 'geology') ? [1, 0.5, 1] : 1,
+                          opacity: [1, 0.5, 1],
                         }}
                         transition={{
                           duration: 2,
-                          repeat: (user || subject.code === 'geology') ? Infinity : 0,
+                          repeat: Infinity,
                         }}
                       />
 
@@ -384,7 +380,7 @@ const Home: React.FC = () => {
 
                       <motion.div
                         style={{
-                          background: (user || subject.code === 'geology') ? 'var(--focus-orange)' : 'var(--soft-brown)',
+                          background: 'var(--focus-orange)',
                           color: 'var(--paper-white)',
                           padding: '8px 16px',
                           borderRadius: '5px',
@@ -396,7 +392,7 @@ const Home: React.FC = () => {
                         }}
                         whileHover={{ scale: 1.05 }}
                       >
-                        {(user || subject.code === 'geology') ? 'ROOM READY' : 'ACCOUNT REQUIRED'}
+                        ROOM READY
                       </motion.div>
                     </motion.div>
                   </motion.div>
@@ -441,8 +437,8 @@ const Home: React.FC = () => {
             </p>
             {!user && (
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button
-                  size="lg"
+                <button
+                  className="btn btn-lg btn-study"
                   onClick={() => navigate('/register')}
                   style={{
                     background: 'var(--paper-white)',
@@ -455,7 +451,7 @@ const Home: React.FC = () => {
                   }}
                 >
                   Claim my room (free)
-                </Button>
+                </button>
               </motion.div>
             )}
             <p 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Form, Alert } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
@@ -35,8 +35,8 @@ const Login: React.FC = () => {
   };
 
   const handleGuestAccess = () => {
-    // Allow guest access to geology
-    navigate('/subjects/geology');
+    // Allow guest access to dashboard/subject selection
+    navigate('/dashboard');
   };
 
   return (
@@ -166,9 +166,9 @@ const Login: React.FC = () => {
 
                     <div className="d-grid gap-2 mb-3">
                       <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                        <Button
+                        <button
                           type="submit"
-                          className="btn-study"
+                          className="btn btn-study"
                           disabled={loading || isUnlocking}
                           style={{
                             background: 'var(--study-primary)',
@@ -178,12 +178,12 @@ const Login: React.FC = () => {
                           }}
                         >
                           {isUnlocking ? 'Unlocking Door...' : loading ? 'Authenticating...' : 'Enter Studio'}
-                        </Button>
+                        </button>
                       </motion.div>
 
                       <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                        <Button
-                          variant="outline-secondary"
+                        <button
+                          className="btn btn-outline-secondary"
                           onClick={handleBiometric}
                           style={{
                             borderColor: 'var(--gentle-blue)',
@@ -192,12 +192,12 @@ const Login: React.FC = () => {
                           }}
                         >
                           🔒 Use Biometrics
-                        </Button>
+                        </button>
                       </motion.div>
 
                       <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                        <Button
-                          variant="outline-secondary"
+                        <button
+                          className="btn btn-outline-secondary"
                           onClick={handleGuestAccess}
                           style={{
                             borderColor: 'var(--cozy-amber)',
@@ -206,7 +206,7 @@ const Login: React.FC = () => {
                           }}
                         >
                           👤 Continue as Guest
-                        </Button>
+                        </button>
                       </motion.div>
                     </div>
                   </Form>

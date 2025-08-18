@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Form, Alert } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
@@ -56,10 +56,12 @@ const Register: React.FC = () => {
     }
 
     const success = await register({
+      username: formData.email, // Use email as username for now
       firstName: formData.firstName,
       lastName: formData.lastName,
       email: formData.email,
-      password: formData.password
+      password: formData.password,
+      yearGroup: 'Year 11' // Default year group
     });
 
     if (success) {
@@ -354,9 +356,9 @@ const Register: React.FC = () => {
 
                     <div className="d-grid gap-2 mb-3">
                       <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                        <Button
+                        <button
                           type="submit"
-                          className="btn-study"
+                          className="btn btn-study"
                           disabled={loading}
                           style={{
                             background: 'var(--study-primary)',
@@ -368,13 +370,13 @@ const Register: React.FC = () => {
                           }}
                         >
                           {loading ? 'Creating Account...' : 'Claim my room (free)'}
-                        </Button>
+                        </button>
                       </motion.div>
 
                       <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                        <Button
-                          variant="outline-secondary"
-                          onClick={() => navigate('/subjects/geology')}
+                        <button
+                          className="btn btn-outline-secondary"
+                          onClick={() => navigate('/dashboard')}
                           style={{
                             borderColor: 'var(--cozy-amber)',
                             color: 'var(--cozy-amber)',
@@ -382,7 +384,7 @@ const Register: React.FC = () => {
                           }}
                         >
                           Continue as Guest
-                        </Button>
+                        </button>
                       </motion.div>
                     </div>
 

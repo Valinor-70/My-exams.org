@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import Navigation from './components/layout/Navigation';
@@ -22,6 +22,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/subjects" element={<Navigate to="/dashboard" replace />} />
               <Route path="/subjects/:subjectCode" element={<SubjectPage />} />
               {/* More routes will be added here */}
             </Routes>

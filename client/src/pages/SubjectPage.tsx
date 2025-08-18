@@ -44,7 +44,7 @@ const SubjectPage: React.FC = () => {
 
   // Subject data
   const subjects = {
-    'maths': {
+    'mathematics': {
       name: 'Mathematics',
       icon: '🔢',
       color: '#667eea',

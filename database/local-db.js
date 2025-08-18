@@ -95,16 +95,16 @@ export const seedDatabase = () => {
     // Insert subjects
     const subjects = [
       { code: 'mathematics', name: 'Mathematics', icon: '📊', description: 'Master numbers, algebra, geometry and more', unlocked: true },
-      { code: 'biology', name: 'Biology', icon: '🧬', description: 'Explore life, cells, genetics and ecosystems', unlocked: false },
-      { code: 'chemistry', name: 'Chemistry', icon: '⚗️', description: 'Understand atoms, molecules and reactions', unlocked: false },
-      { code: 'physics', name: 'Physics', icon: '⚡', description: 'Discover forces, energy and the universe', unlocked: false },
-      { code: 'english-lit', name: 'English Literature', icon: '📚', description: 'Analyze texts, poetry and drama', unlocked: false },
-      { code: 'english-lang', name: 'English Language', icon: '✍️', description: 'Master writing, speaking and grammar', unlocked: false },
-      { code: 'geography', name: 'Geography', icon: '🌍', description: 'Study places, environments and maps', unlocked: false },
+      { code: 'biology', name: 'Biology', icon: '🧬', description: 'Explore life, cells, genetics and ecosystems', unlocked: true },
+      { code: 'chemistry', name: 'Chemistry', icon: '⚗️', description: 'Understand atoms, molecules and reactions', unlocked: true },
+      { code: 'physics', name: 'Physics', icon: '⚡', description: 'Discover forces, energy and the universe', unlocked: true },
+      { code: 'english-lit', name: 'English Literature', icon: '📚', description: 'Analyze texts, poetry and drama', unlocked: true },
+      { code: 'english-lang', name: 'English Language', icon: '✍️', description: 'Master writing, speaking and grammar', unlocked: true },
+      { code: 'geography', name: 'Geography', icon: '🌍', description: 'Study places, environments and maps', unlocked: true },
       { code: 'geology', name: 'Geology', icon: '🗿', description: 'Explore rocks, minerals and Earth processes', unlocked: true },
-      { code: 'computer-science', name: 'Computer Science', icon: '💻', description: 'Learn programming and computational thinking', unlocked: false },
-      { code: 'religious-education', name: 'Religious Education', icon: '🕊️', description: 'Study beliefs, ethics and worldviews', unlocked: false },
-      { code: 'history', name: 'History', icon: '🏛️', description: 'Explore past events and civilizations', unlocked: false }
+      { code: 'computer-science', name: 'Computer Science', icon: '💻', description: 'Learn programming and computational thinking', unlocked: true },
+      { code: 'religious-education', name: 'Religious Education', icon: '🕊️', description: 'Study beliefs, ethics and worldviews', unlocked: true },
+      { code: 'history', name: 'History', icon: '🏛️', description: 'Explore past events and civilizations', unlocked: true }
     ];
 
     const insertSubject = db.prepare(`
