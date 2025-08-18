@@ -8,7 +8,7 @@ import Register from './components/auth/Register';
 import Dashboard from './pages/Dashboard';
 import SubjectPage from './pages/SubjectPage';
 import './App.css';
-import './styles/animations.css';
+import './styles/study-theme.css';
 
 function App() {
   return (
