@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, Text, OrbitControls, Environment, Sphere, Box } from '@react-three/drei';
+import { Float, Text, OrbitControls, Sphere, Box } from '@react-three/drei';
 import * as THREE from 'three';
 
 // Study-themed floating objects (books, papers, etc.)
 const FloatingStudyItem: React.FC<{ 
   position: [number, number, number]; 
-  type: 'book' | 'paper' | 'pencil' | 'apple'; 
+  type: 'book' | 'paper' | 'apple'; 
   color: string 
 }> = ({ position, type, color }) => {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -30,12 +30,6 @@ const FloatingStudyItem: React.FC<{
         return (
           <Box ref={meshRef} position={position} args={[1, 1.4, 0.05]}>
             <meshStandardMaterial color="#fefcf7" roughness={0.9} metalness={0} />
-          </Box>
-        );
-      case 'pencil':
-        return (
-          <Box ref={meshRef} position={position} args={[0.1, 2, 0.1]}>
-            <meshStandardMaterial color={color} roughness={0.6} metalness={0.2} />
           </Box>
         );
       case 'apple':
@@ -77,7 +71,6 @@ const StudyText: React.FC<{ text: string; position: [number, number, number] }> 
         textAlign="center"
         anchorX="center"
         anchorY="middle"
-        font="/fonts/Georgia-Regular.woff"
       >
         {text}
       </Text>
@@ -141,12 +134,9 @@ const Hero3DScene: React.FC = () => {
   return (
     <div style={{ height: '400px', width: '100%' }}>
       <Canvas camera={{ position: [0, 2, 8], fov: 50 }}>
-        <Environment preset="apartment" />
-        
-        {/* Warm, study-friendly lighting */}
-        <ambientLight intensity={0.4} color="#f4f1e8" />
+        {/* Simplified lighting */}
+        <ambientLight intensity={0.6} color="#f4f1e8" />
         <pointLight position={[10, 10, 10]} intensity={0.8} color="#d4a574" />
-        <pointLight position={[-10, 5, -10]} intensity={0.6} color="#6b9dc2" />
         <directionalLight position={[5, 5, 5]} intensity={0.4} color="#fefcf7" />
         
         {/* Study desk centerpiece */}
@@ -156,7 +146,7 @@ const Hero3DScene: React.FC = () => {
         <FloatingStudyItem position={[-3, 1, -1]} type="book" color="#6b9dc2" />
         <FloatingStudyItem position={[3, 0.5, -2]} type="book" color="#d4a574" />
         <FloatingStudyItem position={[-2, -0.5, 2]} type="paper" color="#fefcf7" />
-        <FloatingStudyItem position={[2.5, 2, 1]} type="pencil" color="#704214" />
+        <FloatingStudyItem position={[2.5, 2, 1]} type="apple" color="#e67e22" />
         <FloatingStudyItem position={[-1, 2.5, -0.5]} type="apple" color="#e67e22" />
         <FloatingStudyItem position={[1.5, -1, 2]} type="book" color="#8b7355" />
         
