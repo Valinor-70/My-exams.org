@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Container, Row, Col, Card, Form, Alert, Spinner } from 'react-bootstrap';
+import { Container, Row, Col, Card, Form, Alert } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
@@ -20,7 +20,6 @@ const Register: React.FC = () => {
   const [validationError, setValidationError] = useState('');
   const [isHovered, setIsHovered] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [currentStep, setCurrentStep] = useState(0);
   const { register, loading, error } = useAuth();
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -71,113 +70,102 @@ const Register: React.FC = () => {
     }
   };
 
-  const formSteps = [
-    ['firstName', 'lastName'],
-    ['username', 'email'],
-    ['password', 'confirmPassword'],
-    ['school', 'yearGroup']
-  ];
-
   return (
     <div 
       ref={containerRef}
-      className="register-immersive-container"
-      style={{ 
-        minHeight: '100vh', 
-        position: 'relative',
-        overflow: 'hidden',
-        background: 'linear-gradient(135deg, #764ba2 0%, #667eea 50%, #4facfe 100%)',
-      }}
+      className="sci-fi-immersive-container"
     >
-      {/* Advanced Particle System */}
-      <div className="advanced-particle-system">
-        {Array.from({ length: 60 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="floating-particle"
-            style={{
-              position: 'absolute',
-              width: Math.random() * 8 + 3 + 'px',
-              height: Math.random() * 8 + 3 + 'px',
-              borderRadius: Math.random() > 0.5 ? '50%' : '20%',
-              background: `rgba(255, 255, 255, ${Math.random() * 0.4 + 0.1})`,
-              left: Math.random() * 100 + '%',
-              top: Math.random() * 100 + '%',
-            }}
-            animate={{
-              y: [0, -120, 0],
-              x: [0, Math.random() * 60 - 30, 0],
-              opacity: [0.1, 0.9, 0.1],
-              rotate: [0, Math.random() * 360, 0],
-            }}
-            transition={{
-              duration: Math.random() * 12 + 8,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-            }}
-          />
-        ))}
-      </div>
+      {/* Circuit Board Background */}
+      <div className="circuit-bg"></div>
+      
+      {/* Holographic Particles */}
+      <div className="hologram-particles"></div>
+      
+      {/* Scanlines Effect */}
+      <div className="scanlines"></div>
 
-      {/* Interactive 3D Geometric Shapes */}
-      <div className="geometric-shapes-container">
-        {Array.from({ length: 10 }).map((_, i) => (
+      {/* Advanced Sci-Fi Geometric Shapes */}
+      <div className="sci-fi-shapes">
+        {Array.from({ length: 15 }).map((_, i) => (
           <motion.div
             key={i}
-            className="geometric-shape"
+            className={i % 4 === 0 ? 'hexagon-shape' : i % 4 === 1 ? 'triangle-shape' : i % 4 === 2 ? 'diamond-shape' : 'hexagon-shape'}
             style={{
-              position: 'absolute',
-              width: Math.random() * 140 + 80 + 'px',
-              height: Math.random() * 140 + 80 + 'px',
-              background: `linear-gradient(45deg, 
-                rgba(255, 255, 255, 0.08), 
-                rgba(255, 255, 255, 0.03))`,
-              borderRadius: i % 3 === 0 ? '50%' : i % 3 === 1 ? '20px' : '0',
-              backdropFilter: 'blur(15px)',
-              border: '1px solid rgba(255, 255, 255, 0.15)',
               left: Math.random() * 100 + '%',
               top: Math.random() * 100 + '%',
-              clipPath: i % 4 === 3 ? 'polygon(50% 0%, 0% 100%, 100% 100%)' : 'none',
+              filter: `hue-rotate(${Math.random() * 360}deg)`,
             }}
             animate={{
               rotate: [0, 360],
               scale: [1, 1.3, 1],
-              x: [0, Math.random() * 120 - 60, 0],
-              y: [0, Math.random() * 120 - 60, 0],
+              opacity: [0.1, 0.4, 0.1],
+              x: [0, Math.random() * 50 - 25, 0],
+              y: [0, Math.random() * 50 - 25, 0],
             }}
             transition={{
               duration: Math.random() * 25 + 20,
               repeat: Infinity,
               ease: "linear",
             }}
-            whileHover={{
-              scale: 1.6,
-              rotate: 180,
+          />
+        ))}
+      </div>
+
+      {/* Enhanced Energy Flow Particles */}
+      <div className="energy-particles">
+        {Array.from({ length: 100 }).map((_, i) => (
+          <motion.div
+            key={i}
+            className="energy-particle"
+            style={{
+              left: Math.random() * 100 + '%',
+              background: i % 4 === 0 ? 'var(--neon-cyan)' : 
+                         i % 4 === 1 ? 'var(--neon-purple)' : 
+                         i % 4 === 2 ? 'var(--neon-green)' : 'var(--neon-pink)',
+              boxShadow: `0 0 10px currentColor, 0 0 20px currentColor`,
+              animationDelay: Math.random() * 10 + 's',
+            }}
+            animate={{
+              y: [window.innerHeight, -100],
+              x: [0, Math.random() * 300 - 150],
+              scale: [0, 1.2, 0],
+              rotate: [0, 360],
+            }}
+            transition={{
+              duration: Math.random() * 12 + 8,
+              repeat: Infinity,
+              delay: Math.random() * 8,
             }}
           />
         ))}
       </div>
 
-      {/* Mouse Follower Effect */}
+      {/* Holographic Mouse Follower */}
       <motion.div
-        className="mouse-follower"
         style={{
           position: 'absolute',
-          width: '400px',
-          height: '400px',
-          background: 'radial-gradient(circle, rgba(79, 172, 254, 0.1) 0%, transparent 70%)',
+          width: '500px',
+          height: '500px',
+          background: `conic-gradient(from 0deg, 
+            rgba(0, 255, 255, 0.1), 
+            rgba(128, 0, 255, 0.1), 
+            rgba(255, 0, 128, 0.1), 
+            rgba(0, 255, 65, 0.1), 
+            rgba(0, 255, 255, 0.1))`,
           borderRadius: '50%',
           pointerEvents: 'none',
           zIndex: 1,
+          filter: 'blur(2px)',
         }}
         animate={{
-          x: mousePosition.x - 200,
-          y: mousePosition.y - 200,
+          x: mousePosition.x - 250,
+          y: mousePosition.y - 250,
+          rotate: [0, 360],
         }}
         transition={{
-          type: "spring",
-          stiffness: 15,
-          damping: 12,
+          x: { type: "spring", stiffness: 15, damping: 40 },
+          y: { type: "spring", stiffness: 15, damping: 40 },
+          rotate: { duration: 20, repeat: Infinity, ease: "linear" },
         }}
       />
 
@@ -185,28 +173,20 @@ const Register: React.FC = () => {
         <Row className="justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
           <Col xs={12} sm={11} md={9} lg={7} xl={6}>
             <motion.div
-              initial={{ scale: 0.2, opacity: 0, rotateX: -90 }}
-              animate={{ scale: 1, opacity: 1, rotateX: 0 }}
+              initial={{ scale: 0.2, opacity: 0, rotateX: -90, z: -1000 }}
+              animate={{ scale: 1, opacity: 1, rotateX: 0, z: 0 }}
               transition={{ 
                 type: "spring",
-                stiffness: 40,
-                damping: 15,
-                duration: 1.5
+                stiffness: 50,
+                damping: 20,
+                duration: 2
               }}
               onHoverStart={() => setIsHovered(true)}
               onHoverEnd={() => setIsHovered(false)}
             >
               <motion.div
-                className="register-card-3d"
+                className="holo-card-3d"
                 style={{
-                  background: 'rgba(255, 255, 255, 0.06)',
-                  backdropFilter: 'blur(30px)',
-                  borderRadius: '35px',
-                  border: '1px solid rgba(255, 255, 255, 0.18)',
-                  boxShadow: `
-                    0 30px 60px rgba(0, 0, 0, 0.4),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.2)
-                  `,
                   padding: '3.5rem',
                   position: 'relative',
                   overflow: 'hidden',
@@ -218,29 +198,25 @@ const Register: React.FC = () => {
                 }}
                 transition={{ duration: 0.4 }}
               >
-                {/* Dynamic Background Gradient */}
+                {/* HUD Status Indicators */}
                 <motion.div
                   style={{
                     position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    background: 'linear-gradient(45deg, rgba(118, 75, 162, 0.1), rgba(102, 126, 234, 0.1))',
-                    borderRadius: '35px',
+                    top: '15px',
+                    left: '15px',
+                    right: '15px',
+                    height: '2px',
+                    background: 'var(--success-gradient)',
+                    borderRadius: '1px',
                   }}
                   animate={{
-                    background: [
-                      'linear-gradient(45deg, rgba(118, 75, 162, 0.1), rgba(102, 126, 234, 0.1))',
-                      'linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1))',
-                      'linear-gradient(225deg, rgba(240, 147, 251, 0.1), rgba(245, 87, 108, 0.1))',
-                      'linear-gradient(45deg, rgba(118, 75, 162, 0.1), rgba(102, 126, 234, 0.1))',
-                    ],
+                    scaleX: [0, 1, 0],
+                    opacity: [0, 1, 0],
                   }}
                   transition={{
-                    duration: 10,
+                    duration: 4,
                     repeat: Infinity,
-                    ease: "linear",
+                    ease: "easeInOut",
                   }}
                 />
 
@@ -252,40 +228,46 @@ const Register: React.FC = () => {
                     className="text-center mb-5"
                   >
                     <motion.h2 
-                      className="hero-title"
+                      className="sci-fi-hero-title glitch-text"
+                      data-text="USER REGISTRATION"
                       style={{ 
                         fontSize: '2.8rem',
-                        fontWeight: '700',
-                        background: 'linear-gradient(45deg, #fff, #e0f2fe)',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
+                        fontWeight: '900',
+                        marginBottom: '0.5rem',
+                        fontFamily: 'Orbitron, sans-serif',
+                      }}
+                    >
+                      USER REGISTRATION
+                    </motion.h2>
+                    <motion.div
+                      style={{
+                        color: 'var(--neon-green)',
+                        fontSize: '1rem',
+                        fontFamily: 'Roboto Mono, monospace',
                         marginBottom: '0.5rem',
                       }}
                       animate={{
-                        textShadow: [
-                          '0 0 25px rgba(255, 255, 255, 0.3)',
-                          '0 0 40px rgba(255, 255, 255, 0.6)',
-                          '0 0 25px rgba(255, 255, 255, 0.3)',
-                        ],
+                        opacity: [1, 0.5, 1],
                       }}
                       transition={{
-                        duration: 4,
+                        duration: 2.5,
                         repeat: Infinity,
                       }}
                     >
-                      Join MyExams.org
-                    </motion.h2>
+                      &gt; INITIALIZING NEURAL INTERFACE...
+                    </motion.div>
                     <motion.p
                       style={{ 
-                        color: 'rgba(255, 255, 255, 0.85)',
+                        color: 'var(--neon-cyan)',
                         fontSize: '1.2rem',
                         marginBottom: 0,
+                        fontFamily: 'Roboto Mono, monospace',
                       }}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.6, duration: 0.9 }}
                     >
-                      Start your GCSE success story today
+                      Establish Connection to GCSE Neural Network
                     </motion.p>
                   </motion.div>
                   
@@ -300,14 +282,16 @@ const Register: React.FC = () => {
                       >
                         <Alert 
                           variant="danger" 
+                          className="terminal"
                           style={{
-                            background: 'rgba(220, 53, 69, 0.1)',
-                            border: '1px solid rgba(220, 53, 69, 0.3)',
-                            color: '#fff',
-                            borderRadius: '20px',
+                            background: 'rgba(255, 0, 128, 0.1)',
+                            border: '2px solid var(--neon-pink)',
+                            color: 'var(--neon-pink)',
+                            borderRadius: '0',
+                            fontFamily: 'Roboto Mono, monospace',
                           }}
                         >
-                          {error || validationError}
+                          NEURAL_ERROR: {error || validationError}
                         </Alert>
                       </motion.div>
                     )}
@@ -320,18 +304,16 @@ const Register: React.FC = () => {
                           initial={{ x: -60, opacity: 0 }}
                           animate={{ x: 0, opacity: 1 }}
                           transition={{ delay: 0.4, duration: 0.9 }}
-                          style={{ marginBottom: '1.8rem' }}
+                          style={{ marginBottom: '2rem' }}
                         >
                           <Form.Group>
                             <motion.label
+                              className="sci-fi-label"
                               style={{ 
-                                color: 'rgba(255, 255, 255, 0.9)',
-                                fontSize: '1.05rem',
-                                fontWeight: '500',
-                                marginBottom: '0.6rem',
                                 display: 'block',
+                                marginBottom: '0.75rem',
                               }}
-                              animate={{ x: formData.firstName ? 8 : 0 }}
+                              animate={{ x: formData.firstName ? 10 : 0 }}
                               transition={{ duration: 0.3 }}
                             >
                               First Name
@@ -340,29 +322,15 @@ const Register: React.FC = () => {
                               <Form.Control
                                 type="text"
                                 name="firstName"
-                                placeholder="Enter first name"
+                                placeholder="neural.user.001"
                                 value={formData.firstName}
                                 onChange={handleChange}
                                 required
+                                className="sci-fi-form-control"
                                 style={{
-                                  borderRadius: '18px',
-                                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                                  background: 'rgba(255, 255, 255, 0.08)',
-                                  backdropFilter: 'blur(10px)',
-                                  color: '#fff',
-                                  fontSize: '1.1rem',
                                   padding: '16px 22px',
+                                  fontSize: '1.1rem',
                                   transition: 'all 0.3s ease',
-                                }}
-                                onFocus={(e) => {
-                                  e.target.style.borderColor = 'rgba(79, 172, 254, 0.8)';
-                                  e.target.style.boxShadow = '0 0 25px rgba(79, 172, 254, 0.3)';
-                                  e.target.style.background = 'rgba(255, 255, 255, 0.12)';
-                                }}
-                                onBlur={(e) => {
-                                  e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                                  e.target.style.boxShadow = 'none';
-                                  e.target.style.background = 'rgba(255, 255, 255, 0.08)';
                                 }}
                               />
                             </motion.div>
@@ -374,18 +342,16 @@ const Register: React.FC = () => {
                           initial={{ x: 60, opacity: 0 }}
                           animate={{ x: 0, opacity: 1 }}
                           transition={{ delay: 0.5, duration: 0.9 }}
-                          style={{ marginBottom: '1.8rem' }}
+                          style={{ marginBottom: '2rem' }}
                         >
                           <Form.Group>
                             <motion.label
+                              className="sci-fi-label"
                               style={{ 
-                                color: 'rgba(255, 255, 255, 0.9)',
-                                fontSize: '1.05rem',
-                                fontWeight: '500',
-                                marginBottom: '0.6rem',
                                 display: 'block',
+                                marginBottom: '0.75rem',
                               }}
-                              animate={{ x: formData.lastName ? 8 : 0 }}
+                              animate={{ x: formData.lastName ? 10 : 0 }}
                               transition={{ duration: 0.3 }}
                             >
                               Last Name
@@ -394,29 +360,15 @@ const Register: React.FC = () => {
                               <Form.Control
                                 type="text"
                                 name="lastName"
-                                placeholder="Enter last name"
+                                placeholder="interface.handler"
                                 value={formData.lastName}
                                 onChange={handleChange}
                                 required
+                                className="sci-fi-form-control"
                                 style={{
-                                  borderRadius: '18px',
-                                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                                  background: 'rgba(255, 255, 255, 0.08)',
-                                  backdropFilter: 'blur(10px)',
-                                  color: '#fff',
-                                  fontSize: '1.1rem',
                                   padding: '16px 22px',
+                                  fontSize: '1.1rem',
                                   transition: 'all 0.3s ease',
-                                }}
-                                onFocus={(e) => {
-                                  e.target.style.borderColor = 'rgba(79, 172, 254, 0.8)';
-                                  e.target.style.boxShadow = '0 0 25px rgba(79, 172, 254, 0.3)';
-                                  e.target.style.background = 'rgba(255, 255, 255, 0.12)';
-                                }}
-                                onBlur={(e) => {
-                                  e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                                  e.target.style.boxShadow = 'none';
-                                  e.target.style.background = 'rgba(255, 255, 255, 0.08)';
                                 }}
                               />
                             </motion.div>
@@ -429,49 +381,33 @@ const Register: React.FC = () => {
                       initial={{ x: -60, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ delay: 0.6, duration: 0.9 }}
-                      style={{ marginBottom: '1.8rem' }}
+                      style={{ marginBottom: '2rem' }}
                     >
                       <Form.Group>
                         <motion.label
+                          className="sci-fi-label"
                           style={{ 
-                            color: 'rgba(255, 255, 255, 0.9)',
-                            fontSize: '1.05rem',
-                            fontWeight: '500',
-                            marginBottom: '0.6rem',
                             display: 'block',
+                            marginBottom: '0.75rem',
                           }}
-                          animate={{ x: formData.username ? 8 : 0 }}
+                          animate={{ x: formData.username ? 10 : 0 }}
                           transition={{ duration: 0.3 }}
                         >
-                          Username
+                          Neural ID
                         </motion.label>
                         <motion.div whileFocus={{ scale: 1.02 }}>
                           <Form.Control
                             type="text"
                             name="username"
-                            placeholder="Choose a username"
+                            placeholder="neural_id_unique"
                             value={formData.username}
                             onChange={handleChange}
                             required
+                            className="sci-fi-form-control"
                             style={{
-                              borderRadius: '18px',
-                              border: '1px solid rgba(255, 255, 255, 0.2)',
-                              background: 'rgba(255, 255, 255, 0.08)',
-                              backdropFilter: 'blur(10px)',
-                              color: '#fff',
-                              fontSize: '1.1rem',
                               padding: '16px 22px',
+                              fontSize: '1.1rem',
                               transition: 'all 0.3s ease',
-                            }}
-                            onFocus={(e) => {
-                              e.target.style.borderColor = 'rgba(79, 172, 254, 0.8)';
-                              e.target.style.boxShadow = '0 0 25px rgba(79, 172, 254, 0.3)';
-                              e.target.style.background = 'rgba(255, 255, 255, 0.12)';
-                            }}
-                            onBlur={(e) => {
-                              e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                              e.target.style.boxShadow = 'none';
-                              e.target.style.background = 'rgba(255, 255, 255, 0.08)';
                             }}
                           />
                         </motion.div>
@@ -482,49 +418,33 @@ const Register: React.FC = () => {
                       initial={{ x: 60, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ delay: 0.7, duration: 0.9 }}
-                      style={{ marginBottom: '1.8rem' }}
+                      style={{ marginBottom: '2rem' }}
                     >
                       <Form.Group>
                         <motion.label
+                          className="sci-fi-label"
                           style={{ 
-                            color: 'rgba(255, 255, 255, 0.9)',
-                            fontSize: '1.05rem',
-                            fontWeight: '500',
-                            marginBottom: '0.6rem',
                             display: 'block',
+                            marginBottom: '0.75rem',
                           }}
-                          animate={{ x: formData.email ? 8 : 0 }}
+                          animate={{ x: formData.email ? 10 : 0 }}
                           transition={{ duration: 0.3 }}
                         >
-                          Email Address
+                          Communication Channel
                         </motion.label>
                         <motion.div whileFocus={{ scale: 1.02 }}>
                           <Form.Control
                             type="email"
                             name="email"
-                            placeholder="Enter your email"
+                            placeholder="user@neural.network"
                             value={formData.email}
                             onChange={handleChange}
                             required
+                            className="sci-fi-form-control"
                             style={{
-                              borderRadius: '18px',
-                              border: '1px solid rgba(255, 255, 255, 0.2)',
-                              background: 'rgba(255, 255, 255, 0.08)',
-                              backdropFilter: 'blur(10px)',
-                              color: '#fff',
-                              fontSize: '1.1rem',
                               padding: '16px 22px',
+                              fontSize: '1.1rem',
                               transition: 'all 0.3s ease',
-                            }}
-                            onFocus={(e) => {
-                              e.target.style.borderColor = 'rgba(79, 172, 254, 0.8)';
-                              e.target.style.boxShadow = '0 0 25px rgba(79, 172, 254, 0.3)';
-                              e.target.style.background = 'rgba(255, 255, 255, 0.12)';
-                            }}
-                            onBlur={(e) => {
-                              e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                              e.target.style.boxShadow = 'none';
-                              e.target.style.background = 'rgba(255, 255, 255, 0.08)';
                             }}
                           />
                         </motion.div>
@@ -537,49 +457,33 @@ const Register: React.FC = () => {
                           initial={{ x: -60, opacity: 0 }}
                           animate={{ x: 0, opacity: 1 }}
                           transition={{ delay: 0.8, duration: 0.9 }}
-                          style={{ marginBottom: '1.8rem' }}
+                          style={{ marginBottom: '2rem' }}
                         >
                           <Form.Group>
                             <motion.label
+                              className="sci-fi-label"
                               style={{ 
-                                color: 'rgba(255, 255, 255, 0.9)',
-                                fontSize: '1.05rem',
-                                fontWeight: '500',
-                                marginBottom: '0.6rem',
                                 display: 'block',
+                                marginBottom: '0.75rem',
                               }}
-                              animate={{ x: formData.password ? 8 : 0 }}
+                              animate={{ x: formData.password ? 10 : 0 }}
                               transition={{ duration: 0.3 }}
                             >
-                              Password
+                              Security Protocol
                             </motion.label>
                             <motion.div whileFocus={{ scale: 1.02 }}>
                               <Form.Control
                                 type="password"
                                 name="password"
-                                placeholder="Create password"
+                                placeholder="••••••••••••••••"
                                 value={formData.password}
                                 onChange={handleChange}
                                 required
+                                className="sci-fi-form-control"
                                 style={{
-                                  borderRadius: '18px',
-                                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                                  background: 'rgba(255, 255, 255, 0.08)',
-                                  backdropFilter: 'blur(10px)',
-                                  color: '#fff',
-                                  fontSize: '1.1rem',
                                   padding: '16px 22px',
+                                  fontSize: '1.1rem',
                                   transition: 'all 0.3s ease',
-                                }}
-                                onFocus={(e) => {
-                                  e.target.style.borderColor = 'rgba(79, 172, 254, 0.8)';
-                                  e.target.style.boxShadow = '0 0 25px rgba(79, 172, 254, 0.3)';
-                                  e.target.style.background = 'rgba(255, 255, 255, 0.12)';
-                                }}
-                                onBlur={(e) => {
-                                  e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                                  e.target.style.boxShadow = 'none';
-                                  e.target.style.background = 'rgba(255, 255, 255, 0.08)';
                                 }}
                               />
                             </motion.div>
@@ -591,49 +495,33 @@ const Register: React.FC = () => {
                           initial={{ x: 60, opacity: 0 }}
                           animate={{ x: 0, opacity: 1 }}
                           transition={{ delay: 0.9, duration: 0.9 }}
-                          style={{ marginBottom: '1.8rem' }}
+                          style={{ marginBottom: '2rem' }}
                         >
                           <Form.Group>
                             <motion.label
+                              className="sci-fi-label"
                               style={{ 
-                                color: 'rgba(255, 255, 255, 0.9)',
-                                fontSize: '1.05rem',
-                                fontWeight: '500',
-                                marginBottom: '0.6rem',
                                 display: 'block',
+                                marginBottom: '0.75rem',
                               }}
-                              animate={{ x: formData.confirmPassword ? 8 : 0 }}
+                              animate={{ x: formData.confirmPassword ? 10 : 0 }}
                               transition={{ duration: 0.3 }}
                             >
-                              Confirm Password
+                              Verify Protocol
                             </motion.label>
                             <motion.div whileFocus={{ scale: 1.02 }}>
                               <Form.Control
                                 type="password"
                                 name="confirmPassword"
-                                placeholder="Confirm password"
+                                placeholder="••••••••••••••••"
                                 value={formData.confirmPassword}
                                 onChange={handleChange}
                                 required
+                                className="sci-fi-form-control"
                                 style={{
-                                  borderRadius: '18px',
-                                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                                  background: 'rgba(255, 255, 255, 0.08)',
-                                  backdropFilter: 'blur(10px)',
-                                  color: '#fff',
-                                  fontSize: '1.1rem',
                                   padding: '16px 22px',
+                                  fontSize: '1.1rem',
                                   transition: 'all 0.3s ease',
-                                }}
-                                onFocus={(e) => {
-                                  e.target.style.borderColor = 'rgba(79, 172, 254, 0.8)';
-                                  e.target.style.boxShadow = '0 0 25px rgba(79, 172, 254, 0.3)';
-                                  e.target.style.background = 'rgba(255, 255, 255, 0.12)';
-                                }}
-                                onBlur={(e) => {
-                                  e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                                  e.target.style.boxShadow = 'none';
-                                  e.target.style.background = 'rgba(255, 255, 255, 0.08)';
                                 }}
                               />
                             </motion.div>
@@ -651,74 +539,40 @@ const Register: React.FC = () => {
                       style={{ marginBottom: '2rem' }}
                     >
                       <motion.button
-                        className="w-100"
+                        className="w-100 holo-btn"
                         type="submit"
                         disabled={loading}
                         style={{ 
-                          borderRadius: '18px', 
                           padding: '18px 35px',
-                          background: loading 
-                            ? 'rgba(108, 117, 125, 0.3)' 
-                            : 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-                          border: 'none',
-                          color: 'white',
                           fontSize: '1.2rem',
-                          fontWeight: '600',
-                          cursor: loading ? 'not-allowed' : 'pointer',
+                          fontWeight: '700',
                           position: 'relative',
                           overflow: 'hidden',
-                          boxShadow: '0 15px 35px rgba(0, 0, 0, 0.3)',
                         }}
                         animate={{
                           boxShadow: loading 
                             ? '0 8px 20px rgba(0, 0, 0, 0.2)' 
-                            : '0 15px 35px rgba(79, 172, 254, 0.5)',
+                            : '0 15px 35px var(--neon-green)',
                         }}
                         transition={{ duration: 0.3 }}
                       >
-                        {/* Enhanced button shine effect */}
-                        <motion.div
-                          style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: '-100%',
-                            width: '100%',
-                            height: '100%',
-                            background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent)',
-                          }}
-                          animate={{
-                            left: loading ? '-100%' : ['100%', '-100%'],
-                          }}
-                          transition={{
-                            duration: 2.5,
-                            repeat: Infinity,
-                            repeatDelay: 3,
-                          }}
-                        />
-                        
                         {loading ? (
                           <motion.div
                             style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                           >
-                            <Spinner size="sm" className="me-3" />
-                            <span>Creating your account...</span>
+                            <div className="sci-fi-spinner me-3" style={{ width: '20px', height: '20px' }}></div>
+                            <span>ESTABLISHING NEURAL LINK...</span>
                           </motion.div>
                         ) : (
                           <motion.span
-                            animate={{
-                              textShadow: [
-                                '0 0 0px rgba(255, 255, 255, 0)',
-                                '0 0 15px rgba(255, 255, 255, 0.6)',
-                                '0 0 0px rgba(255, 255, 255, 0)',
-                              ],
-                            }}
-                            transition={{
-                              duration: 2.5,
-                              repeat: Infinity,
-                              repeatDelay: 1.5,
+                            className="neon-text"
+                            style={{
+                              fontFamily: 'Orbitron, sans-serif',
+                              letterSpacing: '2px',
+                              color: 'var(--neon-green)',
                             }}
                           >
-                            Create My Account
+                            INITIALIZE INTERFACE
                           </motion.span>
                         )}
                       </motion.button>
@@ -731,27 +585,36 @@ const Register: React.FC = () => {
                     transition={{ delay: 1.1, duration: 0.9 }}
                     className="text-center"
                   >
-                    <p style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '1.05rem' }}>
-                      Already have an account?{' '}
+                    <p style={{ 
+                      color: 'var(--neon-cyan)', 
+                      fontSize: '1.05rem',
+                      fontFamily: 'Roboto Mono, monospace',
+                    }}>
+                      Neural interface already active?{' '}
                       <Link 
                         to="/login" 
                         style={{ 
-                          color: '#fff',
+                          color: 'var(--neon-purple)',
                           textDecoration: 'none',
                           fontWeight: '600',
                           borderBottom: '1px solid transparent',
                           transition: 'all 0.3s ease',
+                          fontFamily: 'Orbitron, sans-serif',
+                          textTransform: 'uppercase',
+                          letterSpacing: '1px',
                         }}
-                        onMouseEnter={(e) => {
-                          e.target.style.borderBottomColor = '#fff';
-                          e.target.style.textShadow = '0 0 15px rgba(255, 255, 255, 0.6)';
+                        onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                          const target = e.target as HTMLAnchorElement;
+                          target.style.borderBottomColor = 'var(--neon-purple)';
+                          target.style.textShadow = '0 0 15px var(--neon-purple)';
                         }}
-                        onMouseLeave={(e) => {
-                          e.target.style.borderBottomColor = 'transparent';
-                          e.target.style.textShadow = 'none';
+                        onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                          const target = e.target as HTMLAnchorElement;
+                          target.style.borderBottomColor = 'transparent';
+                          target.style.textShadow = 'none';
                         }}
                       >
-                        Login here
+                        Access Terminal
                       </Link>
                     </p>
                   </motion.div>
