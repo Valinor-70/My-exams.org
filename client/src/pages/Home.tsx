@@ -292,8 +292,8 @@ const Home: React.FC = () => {
                   >
                     <Card 
                       className="h-100 shadow-sm border-0 subject-card" 
-                      style={{ cursor: user ? 'pointer' : 'default' }}
-                      onClick={() => user && navigate(`/subjects/${subject.code}`)}
+                      style={{ cursor: (user || subject.code === 'geology') ? 'pointer' : 'default' }}
+                      onClick={() => (user || subject.code === 'geology') && navigate(`/subjects/${subject.code}`)}
                     >
                       <Card.Body className="text-center">
                         <motion.div 
@@ -308,7 +308,7 @@ const Home: React.FC = () => {
                           {subject.icon}
                         </motion.div>
                         <Card.Title className="h6">{subject.name}</Card.Title>
-                        {user ? (
+                        {user || subject.code === 'geology' ? (
                           <button 
                             className={`btn btn-outline-${subject.color} btn-sm btn-3d`}
                             onClick={(e) => {
