@@ -1,0 +1,332 @@
+Full Script — myexams.org
+
+Flow: Index (landing) → Smart door-lock login → Grand Entrance Hall (dashboard) → Choose a door (subject) → Room creation → Account creation (estate-agent sign-up metaphor: “housing is free”) → Allocating your study room (short progress bar) → Ready / Start Focus.
+
+This is a complete audio + on-screen + animation script you can hand to a director, voice actor, animator and dev. It includes exact microcopy, timing, sound cues, ARIA announcements and reduced-motion fallbacks.
+
+Overview / Tone
+
+Primary voice tone: calm, warm, encouraging. (Alternate tones provided at the end.)
+
+Visual mood: polished low-poly 3D, soft ambient lighting, subtle parallax.
+
+Animation language: lively but gentle — microbounces for taps, 600–800ms camera dollies for scene changes, spring bounces for object assembly. Use cubic-bezier(0.2,0.9,0.3,1) easing.
+
+Accessibility: every voice line has an ARIA live announcement equivalent. Respect prefers-reduced-motion: replace camera dolly with cross-fade, skip parallax/idle motion.
+
+Timing convention
+
+Timestamps are relative to the start of each scene. Keep lines tight; allow short pauses for effects. All durations are suggestions for VO pacing and animation sync.
+
+Scene A — INDEX / LANDING PAGE (Grand Doorframe shot)
+
+Visual: Full-bleed deep-slate background. Centered smart door (futuristic lock panel + ornate handle) with a subtle 3D parallax badge that reads myexams.org. Two primary CTAs below: Enter and Create Account.
+
+On-screen microcopy:
+
+Title (H1): myexams.org
+
+Subtitle: Step into your Study Studio.
+
+Buttons: Enter (primary), Create account — housing is free (secondary)
+
+Small helper text: “Prefer a quick visit? Try Demo Mode.”
+
+SFX: soft ambient hum (loop). When page loads: soft page-appear chime (≤200ms).
+
+Animation:
+
+Door badge floats in (300ms, ease-out).
+
+Buttons fade+lift (stagger 120ms).
+
+Reduced-motion: all fades become instant.
+
+Voiceover (0:00–0:06) — calm voice
+
+“Welcome to myexams.org — your Study Studio. Step up to the door when you’re ready.”
+
+ARIA live announcement: “Welcome. Press Enter to open the door, or Create account to claim a free study room.”
+
+Scene B — SMART DOOR-LOCK / LOGIN (the lock interface)
+
+Trigger: User clicks Enter or focuses and presses Enter.
+
+Immediate microfeedback (0–120ms):
+
+Button micro-bounce (scale .96 → 1).
+
+Tiny click tick (≤120ms).
+
+On-screen tiny toast: “Authenticating…” (dismiss after success).
+
+Visual (0.12–0.8s): The smart lock panel slides forward; a circular biometric/pin pad materializes. A label above reads Smart Lock — Secure your session.
+
+On-screen microcopy:
+
+Title: Smart Lock
+
+Prompts: Use biometrics / Enter PIN / Continue as Guest
+
+Helper: “Create account anytime — housing is free.”
+
+SFX: soft electronic unlock tone when credentials accepted.
+
+Interaction cues:
+
+If biometric success: quick green pulse + unlock tone.
+
+If PIN typed: each digit gives a soft click; final digit: unlocking chord (200–300ms).
+
+Voiceover (0:06–0:11)
+
+“Use your quick pass, or press Guest to peek inside.”
+
+ARIA live: “Smart Lock ready. Use biometrics, enter PIN, or continue as Guest.”
+
+Failure state microcopy:
+
+“Incorrect PIN — try again.” (toast)
+
+After 3 fails: “Try Reset via email” (link).
+
+Reduced-motion: error vibrate is replaced with a color change and screen-reader message.
+
+Scene C — DOOR OPENS → GRAND ENTRANCE HALL (Dashboard reveal)
+
+Animation (0.0 → 0.9s): Door unlocks and swings open with a gentle creak and soft camera dolly forward (600–800ms). The camera eases into the grand entrance hall: wide vaulted space, rows of doors (subject doors) on both sides, a central floating guide desk (today’s focus). Ambient volumetric light leaks through stained glass subject badges.
+
+SFX: wooden/metal creak + resolving ambient chord.
+
+On-screen microcopy (overlay slide-up, 300ms):
+
+Header: Grand Entrance
+
+Subtitle: “Choose a door to enter a Study Room.”
+
+Controls: Filter (Subjects / Recently used / Recommended), Search (icon).
+
+Voiceover (0:11–0:18)
+
+“The door is open. This is your Grand Entrance — choose any door to enter a study room.”
+
+ARIA live: “Grand Entrance loaded. Doors available: Geology, Further Maths, Physics, Chemistry…” (list subject names present).
+
+Reduced-motion fallback: cross-fade from door to hall; overlay appears immediately without camera motion.
+
+Scene D — DASHBOARD INTERACTIONS (hover/focus affordances)
+
+Visual: Each door is a 3D object with a subject badge and small plaque showing quick stats (XP, mastery %). Hover/focus causes a tile lift + badge tilt.
+
+Microcopy on door plaques:
+
+Example: Geology — 12 topics • 34% mastered
+
+CTA on hover: Enter (primary), Preview Flashcards (secondary)
+
+SFX: subtle wood tap when selecting, soft hover shimmer.
+
+Animation: hover micro-bounce (100–200ms); door highlight glow (200ms).
+
+Voiceover (0:18–0:22)
+
+“Hover to preview, or step straight through to start.”
+
+ARIA live: “Geology door focused. Press Enter to enter, or Space to preview flashcards.”
+
+Scene E — SELECT A DOOR (subject chosen)
+
+Trigger: User clicks/taps Enter on a door.
+
+Immediate feedback (0–120ms):
+
+Door responds with scale down/up micro-bounce and a small focus chime.
+
+On-screen microcopy (toast):
+
+“Preparing your Geology room…”
+
+SFX: single soft “preparation” tick, followed by a gentle whoosh as tile morphs.
+
+Animation sequence (0.12–1.0s):
+
+Door plaque folds outward into a schematic (400–600ms).
+
+Camera dollies forward while the schematic expands into the room layout (600–900ms). Use cubic-bezier(0.2,0.9,0.3,1).
+
+Low-poly elements assemble: shelves slide in (stagger 80ms), desk drops (spring bounce), lamp slides to position and blooms (200ms).
+
+Holographic cards glide to assigned slots (parabolic arcs, 300–600ms).
+
+Voiceover (0:22–0:30)
+
+“Opening your Geology room — your desk, notes, and flashcards are being placed.”
+
+ARIA live: “Loading Geology room. Placing core assets.”
+
+Reduced-motion: skip dolly + unfolding; instead cross-fade door to 2D room header and load panels.
+
+Scene F — ACCOUNT CREATION (Estate-Agent Sign-Up — “Housing is free”)
+
+Context: If user taps Create account at index or decides to sign up during room setup.
+
+Visual metaphor: an estate agent’s sign swings into view beside the door: a tasteful card that reads “Create account — housing is free” with a smiling house/room icon. The form appears like a lease agreement on a clipboard.
+
+On-screen microcopy (form fields + labels):
+
+Title: Create account — claim your study room
+
+Subtitle: Housing is free. Personalize and sync across devices.
+
+Fields: Full name, Email, Create password, Confirm password
+
+Checkbox: Yes — I’d like reminders & progress emails (optional)
+
+CTA: Claim my room (free) (primary), Continue as Guest (secondary)
+
+Small legal: “We’ll never rent your data — privacy first.”
+
+Narration / Guidance VO (0:30–0:40)
+
+“Create your free account — it takes a moment, and your room will stick with you on any device.”
+
+SFX: pen-scratch tick as form appears; light paper shuffle when fields load.
+
+Animation: clipboard slides up (300ms), fields fade in with 80ms stagger.
+
+Accessibility: label elements clearly; provide aria-describedby for helper text. For screen readers: announce form presence: “Create account form opened.”
+
+Failure/validation microcopy:
+
+On invalid email: “Please enter a valid email.”
+
+Weak password: “Try a longer password — 8+ characters.”
+
+On success: “Account created — allocating your study room.”
+
+Scene G — ALLOCATING YOUR STUDY ROOM (progress bar + estate metaphor)
+
+Visual: After submit, the estate sign flips to show a progress bar that looks like a small property map getting colored in. Above it, copy reads: “Allocating your study room — housing is free.”
+
+On-screen microcopy / progress states:
+
+Step 1 (0–0.3): “Reserving your room…”
+
+Step 2 (0.3–0.6): “Stocking flashcards & notes…”
+
+Step 3 (0.6–0.9): “Personalizing your desk…”
+
+Final (0.9–1.0): “Handover complete — Welcome home.”
+
+Progress bar timing: total ~1.6–2.5 seconds for best perceived snappiness. Use small staggered animations for each step. If longer than 3s, show estimated steps and a cancel button.
+
+SFX: light tap on each step completion; small celebratory chime at completion (≤300ms). Optional confetti particle burst (low-particle) on completion.
+
+Voiceover (0:40–0:46)
+
+“Allocating your study room. Housing is free — we’ll set it up with your top topics right now.”
+
+ARIA live announcements:
+
+On start: “Allocating your study room.”
+
+Each step: “Reserving your room — 33% complete.”
+
+On completion: “Allocation complete. Welcome home.”
+
+Reduced-motion: progress bar replaces animated map with static progress fill and textual percentage updates.
+
+Scene H — ROOM READY / READY OVERLAY
+
+Visual: Camera eases into default study-room vantage. A translucent overlay card slides up with action buttons.
+
+On-screen overlay microcopy:
+
+Title: Welcome home — your Geology studio
+
+Subtitle: “Desk, flashcards and mock exams are ready.”
+
+Buttons: Start Focus (primary), Preview Flashcards (secondary), Customize Room (tertiary)
+
+Small note: “Tip: Toggle Flat Mode in Settings for reduced motion.”
+
+SFX: soft resolving chord + lamp bloom.
+
+Voiceover (0:46–0:52)
+
+“All set — your Geology studio is ready. Start Focus or preview your flashcards.”
+
+ARIA live: “Geology room ready. Start Focus button available.”
+
+Idle micro-animations: lamp breathing, subject badge rotates slowly (very subtle). Reduced-motion users see static lamp and badge.
+
+Scene I — ENTER FOCUS / FIRST ACTIONS
+
+When Start Focus pressed:
+
+Visual: overlay slides away; lamp brightens and desk interface appears with timer & question card.
+
+SFX: small “start” chime; faint metronome tick as a timer begins.
+
+Voiceover (0:52–0:56)
+
+“Focus session started. I’ll remind you to take a short break when it’s time.”
+
+ARIA live: “Focus session started. Timer running.”
+
+If user selects Preview Flashcards:
+
+Flashcards animate into a carousel (Y-rotation flip for each card). Microcopy: “Swipe or use arrow keys to flip.”
+
+Edge states, error handling & short copy
+
+Slow network: after 1s show: “Still loading — this may take a moment.” After 5s: “Try Offline Mode.”
+
+Offline sign-up: “Offline: your room will be reserved locally and synced when online.”
+
+Server error during allocation: “Allocation failed — retry” + Retry button. Offer Create Offline Room fallback.
+
+Microcopy examples for toasts:
+
+Success: “Saved ✓”
+
+Sync: “Syncing… 2/5”
+
+Offline: “Offline — using cached content”
+
+UX & animation spec summary (for dev/animator)
+
+Door open dolly: 600–800ms, cubic-bezier(0.2,0.9,0.3,1).
+
+Tile micro-bounce: 100–160ms, spring feel (stiffness 140, damping 12).
+
+Assemble sequence (shelves → desk → props): stagger 60–100ms. Each uses a 300–500ms spring.
+
+Progress bar total: 1.6–2.5s; if server slow, show detailed step status.
+
+Audio: keep VO ducked under ambient loop. All audio optional and volume adjustable.
+
+Performance: animate transform/opacity only. Provide Flat Mode and prefer-reduced-motion fallbacks.
+
+Accessibility mapping (things to implement exactly)
+
+Every VO line must have an aria-live="polite" announcement with same content.
+
+Form fields labeled and error states announced.
+
+Keyboard accessible: doors focusable, Enter to open, Space to preview.
+
+Reduced-motion: global toggle; Auto-detect prefers-reduced-motion.
+
+Transcripts for all narration available in Settings > Accessibility.
+
+Clear contrast for all CTAs (4.5:1).
+
+Short promotional variant (30s) — optional
+
+VO (30s promo, calm):
+“myexams.org — Step up, unlock your Study Studio. Claim your free study room, watch it assemble around your top topics, and start a focused session in seconds. Housing is free — your progress follows you everywhere. Ready to step inside?”
+
+This can be used for a short app store preview or intro trailer.
+
+Voice tone - Calm and Warm
