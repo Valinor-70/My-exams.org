@@ -19,23 +19,28 @@ const Dashboard: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   
-  // Mock data - in real app would come from API
+  // Mock data - in real app would come from API - All 11 GCSE subjects
   const [subjectProgress] = useState<SubjectProgress[]>([
-    { subject: 'Mathematics', progress: 75, grade: 'B+', testsCompleted: 12, lastActivity: '2 hours ago', examBoard: 'AQA' },
-    { subject: 'Biology', progress: 85, grade: 'A-', testsCompleted: 8, lastActivity: '1 day ago', examBoard: 'PEARSON', scienceType: 'Triple' },
-    { subject: 'Chemistry', progress: 60, grade: 'C+', testsCompleted: 6, lastActivity: '3 days ago', examBoard: 'OCR', scienceType: 'Triple' },
-    { subject: 'Physics', progress: 70, grade: 'B', testsCompleted: 9, lastActivity: '1 day ago', examBoard: 'EDUQAS', scienceType: 'Double' },
-    { subject: 'English Literature', progress: 90, grade: 'A', testsCompleted: 15, lastActivity: '4 hours ago', examBoard: 'WJEC' },
-    { subject: 'Geography', progress: 55, grade: 'C', testsCompleted: 4, lastActivity: '1 week ago', examBoard: 'IGCSE PEARSON' },
+    { subject: 'Mathematics', progress: user ? 75 : 0, grade: user ? 'B+' : '-', testsCompleted: user ? 12 : 0, lastActivity: user ? '2 hours ago' : 'Not started', examBoard: 'AQA' },
+    { subject: 'Biology', progress: user ? 85 : 0, grade: user ? 'A-' : '-', testsCompleted: user ? 8 : 0, lastActivity: user ? '1 day ago' : 'Not started', examBoard: 'PEARSON', scienceType: 'Triple' },
+    { subject: 'Chemistry', progress: user ? 60 : 0, grade: user ? 'C+' : '-', testsCompleted: user ? 6 : 0, lastActivity: user ? '3 days ago' : 'Not started', examBoard: 'OCR', scienceType: 'Triple' },
+    { subject: 'Physics', progress: user ? 70 : 0, grade: user ? 'B' : '-', testsCompleted: user ? 9 : 0, lastActivity: user ? '1 day ago' : 'Not started', examBoard: 'EDUQAS', scienceType: 'Double' },
+    { subject: 'English Literature', progress: user ? 90 : 0, grade: user ? 'A' : '-', testsCompleted: user ? 15 : 0, lastActivity: user ? '4 hours ago' : 'Not started', examBoard: 'WJEC' },
+    { subject: 'English Language', progress: user ? 88 : 0, grade: user ? 'A-' : '-', testsCompleted: user ? 13 : 0, lastActivity: user ? '5 hours ago' : 'Not started', examBoard: 'AQA' },
+    { subject: 'Geography', progress: user ? 55 : 0, grade: user ? 'C' : '-', testsCompleted: user ? 4 : 0, lastActivity: user ? '1 week ago' : 'Not started', examBoard: 'IGCSE PEARSON' },
+    { subject: 'Geology', progress: user ? 65 : 0, grade: user ? 'B-' : '-', testsCompleted: user ? 7 : 0, lastActivity: user ? '2 days ago' : 'Not started', examBoard: 'OCR' },
+    { subject: 'Computer Science', progress: user ? 82 : 0, grade: user ? 'A-' : '-', testsCompleted: user ? 11 : 0, lastActivity: user ? '6 hours ago' : 'Not started', examBoard: 'AQA' },
+    { subject: 'Religious Education', progress: user ? 73 : 0, grade: user ? 'B' : '-', testsCompleted: user ? 9 : 0, lastActivity: user ? '3 days ago' : 'Not started', examBoard: 'EDUQAS' },
+    { subject: 'History', progress: user ? 78 : 0, grade: user ? 'B+' : '-', testsCompleted: user ? 10 : 0, lastActivity: user ? '1 day ago' : 'Not started', examBoard: 'PEARSON' },
   ]);
 
   const [overallStats] = useState({
-    totalStudyTime: '147 hours',
-    totalTests: 54,
-    averageGrade: 'B+',
-    streak: 12,
-    weakestSubject: 'Geography',
-    strongestSubject: 'English Literature'
+    totalStudyTime: user ? '147 hours' : '0 hours',
+    totalTests: user ? 54 : 0,
+    averageGrade: user ? 'B+' : '-',
+    streak: user ? 12 : 0,
+    weakestSubject: user ? 'Geography' : 'Not started',
+    strongestSubject: user ? 'English Literature' : 'Not started'
   });
 
   // Animation variants
@@ -75,10 +80,17 @@ const Dashboard: React.FC = () => {
     return 'danger';
   };
 
-  if (!user) {
-    navigate('/login');
-    return null;
-  }
+  // Create guest user data for demo mode
+  const guestUser = {
+    firstName: 'Guest',
+    id: 'guest',
+    username: 'guest',
+    email: 'guest@demo.com',
+    lastName: 'User',
+    yearGroup: 'Year 11'
+  };
+
+  const currentUser = user || guestUser;
 
   return (
     <motion.div
@@ -114,7 +126,7 @@ const Dashboard: React.FC = () => {
           className="text-center mb-5"
         >
           <h1 className="display-4 fw-bold hero-title mb-3">
-            Welcome back, {user.firstName}! 🎓
+            Welcome back, {currentUser.firstName}! 🎓
           </h1>
           <p className="lead text-muted">
             Track your progress and continue your GCSE journey
@@ -259,13 +271,22 @@ const Dashboard: React.FC = () => {
                               >
                                 <button 
                                   className="btn btn-outline-primary btn-sm w-100 btn-3d"
-                                  onClick={() => navigate(`/subjects/${subject.subject.toLowerCase().replace(' ', '-')}`)}
+                                  onClick={() => {
+                                    const subjectCode = subject.subject.toLowerCase()
+                                      .replace(/\s+/g, '-')
+                                      .replace('mathematics', 'mathematics')
+                                      .replace('english-literature', 'english-literature')
+                                      .replace('english-language', 'english-language')
+                                      .replace('computer-science', 'computer-science')
+                                      .replace('religious-education', 'religious-education');
+                                    navigate(`/subjects/${subjectCode}`);
+                                  }}
                                   style={{
                                     borderRadius: '8px',
                                     padding: '6px 12px'
                                   }}
                                 >
-                                  Continue Study
+                                  {user ? 'Continue Study' : 'Start Learning'}
                                 </button>
                               </motion.div>
                             </Card.Body>

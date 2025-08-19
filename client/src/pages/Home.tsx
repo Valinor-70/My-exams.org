@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import Hero3DScene from '../components/3d/Hero3DScene';
-import '../styles/animations.css';
+import '../styles/study-theme.css';
 
 const Home: React.FC = () => {
   const { user } = useAuth();
@@ -23,83 +23,31 @@ const Home: React.FC = () => {
   }, []);
 
   const subjects = [
-    { name: 'Mathematics', code: 'maths', icon: '🔢', color: 'success', emoji: '⚡' },
-    { name: 'Biology', code: 'biology', icon: '🧬', color: 'info', emoji: '🔬' },
-    { name: 'Chemistry', code: 'chemistry', icon: '⚗️', color: 'warning', emoji: '⚛️' },
-    { name: 'Physics', code: 'physics', icon: '⚡', color: 'danger', emoji: '🌌' },
-    { name: 'English Literature', code: 'english-lit', icon: '📚', color: 'primary', emoji: '📖' },
-    { name: 'English Language', code: 'english-lang', icon: '✍️', color: 'secondary', emoji: '📝' },
-    { name: 'Geography', code: 'geography', icon: '🌍', color: 'success', emoji: '🗺️' },
-    { name: 'Geology', code: 'geology', icon: '🏔️', color: 'dark', emoji: '⛰️' },
-    { name: 'Computer Science', code: 'computer-science', icon: '💻', color: 'info', emoji: '🤖' },
-    { name: 'Religious Education', code: 'religious-education', icon: '✝️', color: 'warning', emoji: '🕊️' },
-    { name: 'History', code: 'history', icon: '🏛️', color: 'danger', emoji: '⚔️' },
+    { name: 'Mathematics', code: 'mathematics', icon: '📊', description: 'Master numbers, algebra, geometry and more' },
+    { name: 'Biology', code: 'biology', icon: '🧬', description: 'Explore life, cells, genetics and ecosystems' },
+    { name: 'Chemistry', code: 'chemistry', icon: '⚗️', description: 'Understand atoms, molecules and reactions' },
+    { name: 'Physics', code: 'physics', icon: '⚡', description: 'Discover forces, energy and the universe' },
+    { name: 'English Literature', code: 'english-lit', icon: '📚', description: 'Analyze texts, poetry and drama' },
+    { name: 'English Language', code: 'english-lang', icon: '✍️', description: 'Master writing, speaking and grammar' },
+    { name: 'Geography', code: 'geography', icon: '🌍', description: 'Study places, environments and maps' },
+    { name: 'Geology', code: 'geology', icon: '🗿', description: 'Explore rocks, minerals and Earth processes' },
+    { name: 'Computer Science', code: 'computer-science', icon: '💻', description: 'Learn programming and computational thinking' },
+    { name: 'Religious Education', code: 'religious-education', icon: '🕊️', description: 'Study beliefs, ethics and worldviews' },
+    { name: 'History', code: 'history', icon: '🏛️', description: 'Explore past events and civilizations' },
   ];
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring" as const,
-        stiffness: 100
-      }
-    }
-  };
-
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-      style={{ background: 'var(--dark-bg)', minHeight: '100vh' }}
-    >
-      {/* Sci-Fi Background Effects */}
-      <div className="circuit-bg"></div>
-      <div className="hologram-particles"></div>
-      <div className="scanlines"></div>
-
-      {/* Advanced Sci-Fi Geometric Shapes */}
-      <div className="sci-fi-shapes">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className={i % 5 === 0 ? 'hexagon-shape' : i % 5 === 1 ? 'triangle-shape' : i % 5 === 2 ? 'diamond-shape' : 'hexagon-shape'}
-            style={{
-              left: Math.random() * 100 + '%',
-              top: Math.random() * 100 + '%',
-              filter: `hue-rotate(${Math.random() * 360}deg) brightness(${0.5 + Math.random() * 0.5})`,
-            }}
-            animate={{
-              rotate: [0, 360],
-              scale: [1, 1.4, 1],
-              opacity: [0.05, 0.2, 0.05],
-              x: [0, Math.random() * 100 - 50, 0],
-              y: [0, Math.random() * 100 - 50, 0],
-            }}
-            transition={{
-              duration: Math.random() * 30 + 20,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Hero Section */}
-      <div className="morphing-bg text-white py-5" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
+    <div className="grand-entrance">
+      {/* Hero Section - Smart Door Landing */}
+      <div 
+        style={{ 
+          background: 'var(--study-warm)',
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          position: 'relative'
+        }}
+      >
         <Container>
           <Row className="align-items-center">
             <Col lg={6}>
@@ -109,48 +57,51 @@ const Home: React.FC = () => {
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
                 <motion.h1 
-                  className="sci-fi-hero-title glitch-text"
-                  data-text="MYEXAMS.ORG"
+                  className="study-hero-title"
                   style={{ 
                     fontSize: '4rem',
-                    fontWeight: '900',
+                    fontWeight: '700',
                     marginBottom: '1rem',
-                    fontFamily: 'Orbitron, sans-serif',
+                    fontFamily: 'Georgia, serif',
+                    color: 'var(--rich-mahogany)',
                   }}
                 >
-                  MYEXAMS.ORG
+                  myexams.org
                 </motion.h1>
                 <motion.div
                   style={{
-                    color: 'var(--neon-green)',
-                    fontSize: '1.2rem',
-                    fontFamily: 'Roboto Mono, monospace',
-                    marginBottom: '1rem',
+                    color: 'var(--deep-forest)',
+                    fontSize: '1.4rem',
+                    fontFamily: 'Georgia, serif',
+                    marginBottom: '1.5rem',
+                    fontStyle: 'italic',
                   }}
                   animate={{
-                    opacity: [1, 0.6, 1],
+                    opacity: [1, 0.8, 1],
                   }}
                   transition={{
-                    duration: 2,
+                    duration: 3,
                     repeat: Infinity,
                   }}
                 >
-                  &gt; NEURAL GCSE ENHANCEMENT PROTOCOL ACTIVE
+                  Step into your Study Studio
                 </motion.div>
                 <motion.p 
-                  className="lead mb-4"
+                  className="lead"
                   style={{
-                    color: 'var(--neon-cyan)',
-                    fontSize: '1.3rem',
-                    fontFamily: 'Roboto Mono, monospace',
+                    color: 'var(--soft-brown)',
+                    fontSize: '1.1rem',
+                    fontFamily: 'Georgia, serif',
                     lineHeight: '1.6',
+                    maxWidth: '500px',
+                    marginBottom: '2rem'
                   }}
                   initial={{ x: -50, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ duration: 0.8, delay: 0.4 }}
                 >
-                  Interface with the ultimate GCSE neural network. Enhance cognitive patterns, 
-                  access quantum lesson matrices, and accelerate learning algorithms.
+                  Welcome to myexams.org — your Study Studio. Step up to the door when you're ready. 
+                  Choose any door to enter a study room and begin your GCSE journey.
                 </motion.p>
                 <motion.div
                   initial={{ y: 50, opacity: 0 }}
@@ -159,69 +110,72 @@ const Home: React.FC = () => {
                 >
                   {!user ? (
                     <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                      <motion.button 
-                        className="holo-btn"
-                        onClick={() => navigate('/register')}
-                        style={{
-                          padding: '15px 30px',
-                          fontSize: '1.1rem',
-                          fontWeight: '700',
-                        }}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <span className="neon-text" style={{ color: 'var(--neon-green)' }}>
-                          INITIALIZE NEURAL LINK
-                        </span>
-                      </motion.button>
-                      <motion.button 
-                        className="holo-btn"
-                        onClick={() => navigate('/login')}
-                        style={{
-                          padding: '15px 30px',
-                          fontSize: '1.1rem',
-                          fontWeight: '700',
-                          borderColor: 'var(--neon-purple)',
-                          color: 'var(--neon-purple)',
-                        }}
-                        whileHover={{ 
-                          scale: 1.05,
-                          backgroundColor: 'var(--neon-purple)',
-                          color: 'var(--dark-bg)'
-                        }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <span style={{ fontFamily: 'Orbitron, sans-serif', letterSpacing: '1px' }}>
-                          ACCESS TERMINAL
-                        </span>
-                      </motion.button>
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <button 
+                          className="btn btn-lg btn-study"
+                          onClick={() => navigate('/login')}
+                          style={{
+                            padding: '15px 30px',
+                            fontSize: '1.1rem',
+                            fontWeight: '600',
+                          }}
+                        >
+                          Enter
+                        </button>
+                      </motion.div>
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <button 
+                          className="btn btn-lg btn-outline-secondary btn-study"
+                          onClick={() => navigate('/register')}
+                          style={{
+                            padding: '15px 30px',
+                            fontSize: '1.1rem',
+                            fontWeight: '600',
+                            borderColor: 'var(--soft-brown)',
+                            color: 'var(--soft-brown)',
+                          }}
+                        >
+                          Create account — housing is free
+                        </button>
+                      </motion.div>
                     </div>
                   ) : (
-                    <motion.button 
-                      className="holo-btn"
-                      onClick={() => navigate('/dashboard')}
-                      style={{
-                        padding: '15px 30px',
-                        fontSize: '1.1rem',
-                        fontWeight: '700',
-                      }}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <span className="neon-text" style={{ color: 'var(--neon-cyan)' }}>
-                        NEURAL DASHBOARD
-                      </span>
-                    </motion.button>
+                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                      <button 
+                        className="btn btn-lg btn-study"
+                        onClick={() => navigate('/dashboard')}
+                        style={{
+                          padding: '15px 30px',
+                          fontSize: '1.1rem',
+                          fontWeight: '600',
+                        }}
+                      >
+                        Enter Your Study Studio
+                      </button>
+                    </motion.div>
                   )}
                 </motion.div>
+                <motion.p
+                  style={{
+                    fontSize: '0.9rem',
+                    color: 'var(--soft-brown)',
+                    fontFamily: 'Georgia, serif',
+                    fontStyle: 'italic',
+                    marginTop: '1rem',
+                  }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1 }}
+                >
+                  Prefer a quick visit? Try Demo Mode.
+                </motion.p>
               </motion.div>
             </Col>
             <Col lg={6}>
               <motion.div
                 initial={{ x: 100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 1, delay: 0.3 }}
-                className="text-center"
+                transition={{ duration: 0.8, delay: 0.4 }}
               >
                 <Hero3DScene />
               </motion.div>
@@ -230,172 +184,8 @@ const Home: React.FC = () => {
         </Container>
       </div>
 
-      {/* Features Section */}
-      <Container className="py-5">
-        <motion.div
-          initial={{ y: 50, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <Row className="text-center mb-5">
-            <Col>
-              <motion.h2 
-                className="sci-fi-hero-title"
-                style={{ 
-                  fontSize: '3rem',
-                  fontWeight: '700',
-                  marginBottom: '1rem',
-                  fontFamily: 'Orbitron, sans-serif',
-                  color: 'var(--neon-cyan)',
-                }}
-              >
-                NEURAL ENHANCEMENT PROTOCOLS
-              </motion.h2>
-              <motion.div
-                style={{
-                  color: 'var(--neon-green)',
-                  fontSize: '1.1rem',
-                  fontFamily: 'Roboto Mono, monospace',
-                }}
-                animate={{
-                  opacity: [1, 0.7, 1],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                }}
-              >
-                &gt; Advanced cognitive enhancement algorithms for GCSE optimization
-              </motion.div>
-            </Col>
-          </Row>
-        </motion.div>
-
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <Row className="g-4 mb-5">
-            <Col md={4}>
-              <motion.div variants={itemVariants}>
-                <motion.div
-                  className="holo-card-3d h-100 text-center"
-                  style={{ padding: '2rem' }}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <motion.div 
-                    style={{ fontSize: '4rem', color: 'var(--neon-cyan)' }} 
-                    className="mb-3"
-                    whileHover={{ 
-                      scale: 1.2, 
-                      rotate: 360,
-                      filter: 'drop-shadow(0 0 20px var(--neon-cyan))'
-                    }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    🧠
-                  </motion.div>
-                  <h3 style={{ 
-                    fontFamily: 'Orbitron, sans-serif', 
-                    color: 'var(--neon-cyan)',
-                    marginBottom: '1rem',
-                  }}>
-                    NEURAL SYLLABUS MATRIX
-                  </h3>
-                  <p style={{ 
-                    color: 'var(--neon-cyan)', 
-                    fontFamily: 'Roboto Mono, monospace',
-                    opacity: 0.8,
-                  }}>
-                    Complete cognitive mapping of all 11 core GCSE subjects with 
-                    quantum-enhanced explanations and neural pathway optimization.
-                  </p>
-                </motion.div>
-              </motion.div>
-            </Col>
-            <Col md={4}>
-              <motion.div variants={itemVariants}>
-                <motion.div
-                  className="holo-card-3d h-100 text-center"
-                  style={{ padding: '2rem' }}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <motion.div 
-                    style={{ fontSize: '4rem', color: 'var(--neon-purple)' }} 
-                    className="mb-3"
-                    whileHover={{ 
-                      scale: 1.2, 
-                      rotate: -360,
-                      filter: 'drop-shadow(0 0 20px var(--neon-purple))'
-                    }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    ⚡
-                  </motion.div>
-                  <h3 style={{ 
-                    fontFamily: 'Orbitron, sans-serif', 
-                    color: 'var(--neon-purple)',
-                    marginBottom: '1rem',
-                  }}>
-                    QUANTUM TEST SIMULATION
-                  </h3>
-                  <p style={{ 
-                    color: 'var(--neon-purple)', 
-                    fontFamily: 'Roboto Mono, monospace',
-                    opacity: 0.8,
-                  }}>
-                    Generate infinite practice simulations with instant neural feedback, 
-                    scoring algorithms, and adaptive difficulty protocols.
-                  </p>
-                </motion.div>
-              </motion.div>
-            </Col>
-            <Col md={4}>
-              <motion.div variants={itemVariants}>
-                <motion.div
-                  className="holo-card-3d h-100 text-center"
-                  style={{ padding: '2rem' }}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <motion.div 
-                    style={{ fontSize: '4rem', color: 'var(--neon-green)' }} 
-                    className="mb-3"
-                    whileHover={{ 
-                      scale: 1.2, 
-                      y: -10,
-                      filter: 'drop-shadow(0 0 20px var(--neon-green))'
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    📊
-                  </motion.div>
-                  <h3 style={{ 
-                    fontFamily: 'Orbitron, sans-serif', 
-                    color: 'var(--neon-green)',
-                    marginBottom: '1rem',
-                  }}>
-                    COGNITIVE ANALYTICS
-                  </h3>
-                  <p style={{ 
-                    color: 'var(--neon-green)', 
-                    fontFamily: 'Roboto Mono, monospace',
-                    opacity: 0.8,
-                  }}>
-                    Advanced neural pattern monitoring, cognitive weakness detection, 
-                    and progress optimization through machine learning algorithms.
-                  </p>
-                </motion.div>
-              </motion.div>
-            </Col>
-          </Row>
-        </motion.div>
-      </Container>
-
-      {/* Subjects Section */}
-      <div style={{ background: 'var(--dark-surface)', padding: '5rem 0' }}>
+      {/* Study Studio Features Section */}
+      <div style={{ background: 'var(--paper-white)', padding: '5rem 0' }}>
         <Container>
           <motion.div
             initial={{ y: 50, opacity: 0 }}
@@ -406,82 +196,155 @@ const Home: React.FC = () => {
             <Row className="text-center mb-5">
               <Col>
                 <motion.h2 
-                  className="sci-fi-hero-title"
+                  className="study-hero-title"
                   style={{ 
-                    fontSize: '3rem',
+                    fontSize: '2.5rem',
                     fontWeight: '700',
                     marginBottom: '1rem',
-                    fontFamily: 'Orbitron, sans-serif',
-                    color: 'var(--neon-cyan)',
+                    fontFamily: 'Georgia, serif',
+                    color: 'var(--rich-mahogany)',
                   }}
                 >
-                  SUBJECT NEURAL NETWORKS
+                  Your Personal Study Studio
                 </motion.h2>
-                <motion.div
-                  style={{
-                    color: 'var(--neon-green)',
-                    fontSize: '1.1rem',
-                    fontFamily: 'Roboto Mono, monospace',
-                  }}
-                  animate={{
-                    opacity: [1, 0.7, 1],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
+                <motion.p 
+                  style={{ 
+                    fontSize: '1.1rem', 
+                    color: 'var(--soft-brown)', 
+                    fontFamily: 'Georgia, serif',
+                    fontStyle: 'italic',
                   }}
                 >
-                  &gt; Neural interface modules for all core GCSE knowledge domains
+                  A complete study environment designed for GCSE success
+                </motion.p>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={4} className="mb-4">
+                <motion.div
+                  className="study-room-card text-center p-4 h-100"
+                  whileHover={{ y: -5 }}
+                >
+                  <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📚</div>
+                  <h4 style={{ color: 'var(--rich-mahogany)', fontFamily: 'Georgia, serif' }}>
+                    Complete Study Rooms
+                  </h4>
+                  <p style={{ color: 'var(--soft-brown)', fontFamily: 'Georgia, serif' }}>
+                    Fully equipped study rooms for all 11 core GCSE subjects with structured 
+                    topic pages, clear explanations, and practice materials.
+                  </p>
+                </motion.div>
+              </Col>
+              <Col md={4} className="mb-4">
+                <motion.div
+                  className="study-room-card text-center p-4 h-100"
+                  whileHover={{ y: -5 }}
+                >
+                  <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🎯</div>
+                  <h4 style={{ color: 'var(--rich-mahogany)', fontFamily: 'Georgia, serif' }}>
+                    Personalized Testing
+                  </h4>
+                  <p style={{ color: 'var(--soft-brown)', fontFamily: 'Georgia, serif' }}>
+                    Generate infinite practice tests with instant feedback, scoring, 
+                    and detailed explanations to track your progress.
+                  </p>
+                </motion.div>
+              </Col>
+              <Col md={4} className="mb-4">
+                <motion.div
+                  className="study-room-card text-center p-4 h-100"
+                  whileHover={{ y: -5 }}
+                >
+                  <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📊</div>
+                  <h4 style={{ color: 'var(--rich-mahogany)', fontFamily: 'Georgia, serif' }}>
+                    Progress Tracking
+                  </h4>
+                  <p style={{ color: 'var(--soft-brown)', fontFamily: 'Georgia, serif' }}>
+                    Monitor your learning journey with detailed analytics, progress 
+                    visualization, and personalized study recommendations.
+                  </p>
                 </motion.div>
               </Col>
             </Row>
           </motion.div>
+        </Container>
+      </div>
 
+      {/* Grand Entrance Hall - Subject Doors */}
+      <div style={{ background: 'var(--warm-beige)', padding: '5rem 0' }}>
+        <Container>
           <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
+            initial={{ y: 50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <Row className="g-3">
+            <Row className="text-center mb-5">
+              <Col>
+                <motion.h2 
+                  className="study-hero-title"
+                  style={{ 
+                    fontSize: '2.5rem',
+                    fontWeight: '700',
+                    marginBottom: '1rem',
+                    fontFamily: 'Georgia, serif',
+                    color: 'var(--rich-mahogany)',
+                  }}
+                >
+                  Grand Entrance Hall
+                </motion.h2>
+                <motion.p 
+                  style={{ 
+                    fontSize: '1.1rem', 
+                    color: 'var(--soft-brown)', 
+                    fontFamily: 'Georgia, serif',
+                    fontStyle: 'italic',
+                  }}
+                >
+                  Choose a door to enter a Study Room
+                </motion.p>
+              </Col>
+            </Row>
+            <Row>
               {subjects.map((subject, index) => (
-                <Col key={subject.code} lg={3} md={4} sm={6}>
+                <Col lg={4} md={6} className="mb-4" key={subject.code}>
                   <motion.div
-                    variants={itemVariants}
-                    whileHover={{ scale: 1.05, y: -5 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`stagger-item`}
-                    style={{ animationDelay: `${index * 0.1}s` }}
+                    className="stagger-item"
+                    initial={{ y: 50, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.02, y: -5 }}
+                    whileTap={{ scale: 0.98 }}
                   >
                     <motion.div
-                      className="sci-fi-subject-card h-100" 
+                      className="study-door h-100" 
                       style={{ 
-                        cursor: (user || subject.code === 'geology') ? 'pointer' : 'default',
-                        padding: '1.5rem',
-                        background: 'rgba(26, 26, 46, 0.8)',
-                        position: 'relative',
-                        overflow: 'hidden',
+                        cursor: 'pointer',
+                        padding: '2rem 1.5rem',
+                        minHeight: '200px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        textAlign: 'center',
                       }}
-                      onClick={() => (user || subject.code === 'geology') && navigate(`/subjects/${subject.code}`)}
-                      whileHover={{
-                        backgroundColor: 'rgba(26, 26, 46, 0.95)',
-                        boxShadow: `0 10px 30px var(--neon-cyan)`,
-                      }}
+                      onClick={() => navigate(`/subjects/${subject.code}`)}
                     >
-                      {/* Status indicator */}
+                      {/* Room Status */}
                       <motion.div
                         style={{
                           position: 'absolute',
-                          top: '10px',
-                          right: '10px',
-                          width: '8px',
-                          height: '8px',
+                          top: '15px',
+                          right: '15px',
+                          width: '12px',
+                          height: '12px',
                           borderRadius: '50%',
-                          background: (user || subject.code === 'geology') ? 'var(--neon-green)' : 'var(--neon-pink)',
-                          boxShadow: `0 0 10px currentColor`,
+                          background: 'var(--focus-orange)',
+                          boxShadow: '0 0 10px var(--focus-orange)',
                         }}
                         animate={{
-                          opacity: [1, 0.3, 1],
+                          opacity: [1, 0.5, 1],
                         }}
                         transition={{
                           duration: 2,
@@ -489,64 +352,48 @@ const Home: React.FC = () => {
                         }}
                       />
 
-                      <div className="text-center">
-                        <motion.div 
-                          style={{ 
-                            fontSize: '3rem', 
-                            marginBottom: '1rem',
-                            filter: 'drop-shadow(0 0 10px currentColor)',
-                          }} 
-                          whileHover={{ 
-                            scale: 1.3, 
-                            rotate: [0, -10, 10, -10, 0],
-                            transition: { duration: 0.5 }
-                          }}
-                        >
-                          <span style={{ color: 'var(--neon-cyan)' }}>{subject.emoji}</span>
-                        </motion.div>
-                        <h5 style={{ 
-                          fontFamily: 'Orbitron, sans-serif',
-                          color: 'var(--neon-cyan)',
+                      <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>{subject.icon}</div>
+                      
+                      <h5 
+                        style={{ 
+                          color: 'var(--paper-white)', 
+                          fontFamily: 'Georgia, serif',
+                          fontWeight: '600',
+                          marginBottom: '0.5rem',
+                          textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
+                        }}
+                      >
+                        {subject.name.toUpperCase()}
+                      </h5>
+                      
+                      <p 
+                        style={{ 
+                          color: 'rgba(254, 252, 247, 0.9)', 
+                          fontFamily: 'Georgia, serif',
+                          fontSize: '0.9rem',
                           marginBottom: '1rem',
-                          fontSize: '1.1rem',
-                        }}>
-                          {subject.name.toUpperCase()}
-                        </h5>
-                        {user || subject.code === 'geology' ? (
-                          <motion.button 
-                            className="holo-btn"
-                            style={{
-                              padding: '8px 16px',
-                              fontSize: '0.9rem',
-                              borderColor: 'var(--neon-green)',
-                              color: 'var(--neon-green)',
-                            }}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              navigate(`/subjects/${subject.code}`);
-                            }}
-                            whileHover={{ 
-                              backgroundColor: 'var(--neon-green)',
-                              color: 'var(--dark-bg)'
-                            }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            NEURAL LINK ACTIVE
-                          </motion.button>
-                        ) : (
-                          <div style={{
-                            padding: '8px 16px',
-                            background: 'rgba(255, 0, 128, 0.1)',
-                            border: '1px solid var(--neon-pink)',
-                            color: 'var(--neon-pink)',
-                            fontFamily: 'Roboto Mono, monospace',
-                            fontSize: '0.8rem',
-                            textTransform: 'uppercase',
-                          }}>
-                            NEURAL AUTH REQUIRED
-                          </div>
-                        )}
-                      </div>
+                          textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
+                        }}
+                      >
+                        {subject.description}
+                      </p>
+
+                      <motion.div
+                        style={{
+                          background: 'var(--focus-orange)',
+                          color: 'var(--paper-white)',
+                          padding: '8px 16px',
+                          borderRadius: '5px',
+                          fontSize: '0.8rem',
+                          fontFamily: 'Georgia, serif',
+                          fontWeight: '600',
+                          textTransform: 'uppercase',
+                          letterSpacing: '1px',
+                        }}
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        ROOM READY
+                      </motion.div>
                     </motion.div>
                   </motion.div>
                 </Col>
@@ -556,81 +403,72 @@ const Home: React.FC = () => {
         </Container>
       </div>
 
-      {/* CTA Section */}
-      {!user && (
-        <div style={{ background: 'var(--dark-panel)', padding: '5rem 0' }}>
-          <Container className="text-center">
-            <motion.div
-              initial={{ y: 50, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
+      {/* Call to Action - Estate Agent Section */}
+      <div style={{ background: 'var(--study-primary)', padding: '5rem 0', color: 'var(--paper-white)' }}>
+        <Container>
+          <motion.div
+            initial={{ y: 50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <h2 
+              style={{ 
+                fontSize: '2.5rem',
+                fontWeight: '700',
+                marginBottom: '1rem',
+                fontFamily: 'Georgia, serif',
+                textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
+              }}
             >
-              <motion.h2 
-                className="sci-fi-hero-title glitch-text"
-                data-text="INITIATE NEURAL ENHANCEMENT"
-                style={{ 
-                  fontSize: '2.5rem',
-                  fontWeight: '700',
-                  marginBottom: '1rem',
-                  fontFamily: 'Orbitron, sans-serif',
-                  color: 'var(--neon-cyan)',
-                }}
-              >
-                INITIATE NEURAL ENHANCEMENT
-              </motion.h2>
-              <motion.div
-                style={{
-                  color: 'var(--neon-green)',
-                  fontSize: '1.2rem',
-                  fontFamily: 'Roboto Mono, monospace',
-                  marginBottom: '2rem',
-                }}
-                animate={{
-                  opacity: [1, 0.7, 1],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                }}
-              >
-                &gt; Join thousands of enhanced cognitive patterns in the GCSE neural network
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <motion.button 
-                  className="holo-btn"
+              Claim Your Study Room
+            </h2>
+            <p 
+              style={{ 
+                fontSize: '1.2rem', 
+                fontFamily: 'Georgia, serif',
+                fontStyle: 'italic',
+                marginBottom: '2rem',
+                textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
+              }}
+            >
+              Housing is free. Personalize and sync across devices.
+            </p>
+            {!user && (
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <button
+                  className="btn btn-lg btn-study"
                   onClick={() => navigate('/register')}
                   style={{
-                    padding: '20px 40px',
-                    fontSize: '1.3rem',
-                    fontWeight: '700',
-                    position: 'relative',
-                  }}
-                  animate={{
-                    boxShadow: [
-                      '0 0 20px var(--neon-cyan)',
-                      '0 0 40px var(--neon-cyan)',
-                      '0 0 20px var(--neon-cyan)',
-                    ],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
+                    background: 'var(--paper-white)',
+                    border: '2px solid var(--paper-white)',
+                    color: 'var(--rich-mahogany)',
+                    fontFamily: 'Georgia, serif',
+                    fontWeight: '600',
+                    padding: '15px 30px',
+                    fontSize: '1.1rem',
                   }}
                 >
-                  <span className="neon-text" style={{ color: 'var(--neon-cyan)' }}>
-                    ACTIVATE NEURAL INTERFACE
-                  </span>
-                </motion.button>
+                  Claim my room (free)
+                </button>
               </motion.div>
-            </motion.div>
-          </Container>
-        </div>
-      )}
-    </motion.div>
+            )}
+            <p 
+              style={{ 
+                fontSize: '0.9rem', 
+                fontFamily: 'Georgia, serif',
+                fontStyle: 'italic',
+                marginTop: '1rem',
+                opacity: 0.8
+              }}
+            >
+              We'll never rent your data — privacy first.
+            </p>
+          </motion.div>
+        </Container>
+      </div>
+    </div>
   );
 };
 

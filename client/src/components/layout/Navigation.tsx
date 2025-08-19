@@ -14,17 +14,17 @@ const Navigation: React.FC = () => {
   };
 
   const subjects = [
-    { name: 'Mathematics', code: 'maths', icon: '⚡' },
-    { name: 'Biology', code: 'biology', icon: '🔬' },
-    { name: 'Chemistry', code: 'chemistry', icon: '⚛️' },
-    { name: 'Physics', code: 'physics', icon: '🌌' },
-    { name: 'English Literature', code: 'english-lit', icon: '📖' },
-    { name: 'English Language', code: 'english-lang', icon: '📝' },
-    { name: 'Geography', code: 'geography', icon: '🗺️' },
-    { name: 'Geology', code: 'geology', icon: '⛰️' },
-    { name: 'Computer Science', code: 'computer-science', icon: '🤖' },
+    { name: 'Mathematics', code: 'maths', icon: '📊' },
+    { name: 'Biology', code: 'biology', icon: '🧬' },
+    { name: 'Chemistry', code: 'chemistry', icon: '⚗️' },
+    { name: 'Physics', code: 'physics', icon: '⚡' },
+    { name: 'English Literature', code: 'english-lit', icon: '📚' },
+    { name: 'English Language', code: 'english-lang', icon: '✍️' },
+    { name: 'Geography', code: 'geography', icon: '🌍' },
+    { name: 'Geology', code: 'geology', icon: '🗿' },
+    { name: 'Computer Science', code: 'computer-science', icon: '💻' },
     { name: 'Religious Education', code: 'religious-education', icon: '🕊️' },
-    { name: 'History', code: 'history', icon: '⚔️' },
+    { name: 'History', code: 'history', icon: '🏛️' },
   ];
 
   return (
@@ -36,11 +36,11 @@ const Navigation: React.FC = () => {
       <Navbar 
         expand="lg" 
         sticky="top" 
-        className="sci-fi-nav shadow-lg"
+        className="study-nav shadow-lg"
         style={{ 
-          background: 'rgba(26, 26, 46, 0.95)',
+          background: 'linear-gradient(145deg, var(--study-wood), var(--soft-brown))',
           backdropFilter: 'blur(20px)',
-          borderBottom: '2px solid var(--neon-cyan)',
+          borderBottom: '3px solid var(--rich-mahogany)',
         }}
       >
         <Container>
@@ -52,24 +52,24 @@ const Navigation: React.FC = () => {
               as={Link} 
               to="/" 
               style={{
-                fontFamily: 'Orbitron, sans-serif',
+                fontFamily: 'Georgia, serif',
                 fontWeight: '700',
                 fontSize: '1.5rem',
-                color: 'var(--neon-cyan)',
-                textShadow: '0 0 10px var(--neon-cyan)',
+                color: 'var(--paper-white)',
+                textShadow: '0 2px 4px rgba(0,0,0,0.3)',
                 textDecoration: 'none',
               }}
-              className="sci-fi-nav-link"
+              className="study-nav-link"
             >
-              🎓 MYEXAMS.ORG
+              📚 MYEXAMS.ORG
             </Navbar.Brand>
           </motion.div>
           
           <Navbar.Toggle 
             aria-controls="basic-navbar-nav"
             style={{
-              borderColor: 'var(--neon-cyan)',
-              filter: 'brightness(2)',
+              borderColor: 'var(--study-gold)',
+              filter: 'brightness(1.2)',
             }}
           />
           
@@ -79,13 +79,11 @@ const Navigation: React.FC = () => {
                 <Nav.Link 
                   as={Link} 
                   to="/"
-                  className="sci-fi-nav-link"
+                  className="study-nav-link"
                   style={{
-                    fontFamily: 'Orbitron, sans-serif',
-                    color: 'var(--neon-cyan)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '1px',
-                    fontSize: '0.9rem',
+                    fontFamily: 'Georgia, serif',
+                    color: 'var(--paper-white)',
+                    fontSize: '1rem',
                   }}
                 >
                   Home
@@ -95,31 +93,32 @@ const Navigation: React.FC = () => {
               {user && (
                 <>
                   <NavDropdown 
-                    title="NEURAL SUBJECTS" 
+                    title="Study Rooms" 
                     id="subjects-dropdown"
-                    className="sci-fi-nav-link"
+                    className="study-nav-link"
                     style={{
-                      fontFamily: 'Orbitron, sans-serif',
-                      color: 'var(--neon-cyan)',
+                      fontFamily: 'Georgia, serif',
+                      color: 'var(--paper-white)',
                     }}
                   >
                     {subjects.map((subject) => (
                       <motion.div
                         key={subject.code}
-                        whileHover={{ x: 5, backgroundColor: 'rgba(0, 255, 255, 0.1)' }}
+                        whileHover={{ x: 5, backgroundColor: 'rgba(212, 165, 116, 0.1)' }}
                       >
                         <NavDropdown.Item
                           as={Link}
                           to={`/subjects/${subject.code}`}
                           style={{
-                            fontFamily: 'Roboto Mono, monospace',
-                            color: 'var(--neon-cyan)',
-                            background: 'var(--dark-surface)',
-                            border: '1px solid rgba(0, 255, 255, 0.2)',
-                            borderRadius: '0',
+                            fontFamily: 'Georgia, serif',
+                            color: 'var(--rich-mahogany)',
+                            background: 'var(--paper-white)',
+                            border: '1px solid rgba(139, 115, 85, 0.2)',
+                            borderRadius: '3px',
+                            margin: '2px',
                           }}
                         >
-                          <span style={{ color: 'var(--neon-green)' }}>&gt;</span> {subject.icon} {subject.name.toUpperCase()}
+                          {subject.icon} {subject.name}
                         </NavDropdown.Item>
                       </motion.div>
                     ))}
@@ -129,16 +128,14 @@ const Navigation: React.FC = () => {
                     <Nav.Link 
                       as={Link} 
                       to="/dashboard"
-                      className="sci-fi-nav-link"
+                      className="study-nav-link"
                       style={{
-                        fontFamily: 'Orbitron, sans-serif',
-                        color: 'var(--neon-green)',
-                        textTransform: 'uppercase',
-                        letterSpacing: '1px',
-                        fontSize: '0.9rem',
+                        fontFamily: 'Georgia, serif',
+                        color: 'var(--study-gold)',
+                        fontSize: '1rem',
                       }}
                     >
-                      Neural Dashboard
+                      My Studio
                     </Nav.Link>
                   </motion.div>
 
@@ -146,16 +143,14 @@ const Navigation: React.FC = () => {
                     <Nav.Link 
                       as={Link} 
                       to="/tests"
-                      className="sci-fi-nav-link"
+                      className="study-nav-link"
                       style={{
-                        fontFamily: 'Orbitron, sans-serif',
-                        color: 'var(--neon-purple)',
-                        textTransform: 'uppercase',
-                        letterSpacing: '1px',
-                        fontSize: '0.9rem',
+                        fontFamily: 'Georgia, serif',
+                        color: 'var(--gentle-blue)',
+                        fontSize: '1rem',
                       }}
                     >
-                      Quantum Tests
+                      Practice Tests
                     </Nav.Link>
                   </motion.div>
                 </>
@@ -167,61 +162,63 @@ const Navigation: React.FC = () => {
                 <NavDropdown 
                   title={
                     <span style={{
-                      fontFamily: 'Orbitron, sans-serif',
-                      color: 'var(--neon-green)',
-                      textTransform: 'uppercase',
-                      letterSpacing: '1px',
+                      fontFamily: 'Georgia, serif',
+                      color: 'var(--study-gold)',
+                      fontWeight: '600',
                     }}>
-                      <span style={{ color: 'var(--neon-cyan)' }}>&gt;</span> NEURAL_{user.firstName.toUpperCase()}
+                      👋 {user.firstName}
                     </span>
                   }
                   id="user-dropdown" 
                   align="end"
-                  className="sci-fi-nav-link"
+                  className="study-nav-link"
                 >
-                  <motion.div whileHover={{ x: 5, backgroundColor: 'rgba(0, 255, 255, 0.1)' }}>
+                  <motion.div whileHover={{ x: 5, backgroundColor: 'rgba(212, 165, 116, 0.1)' }}>
                     <NavDropdown.Item 
                       as={Link} 
                       to="/profile"
                       style={{
-                        fontFamily: 'Roboto Mono, monospace',
-                        color: 'var(--neon-cyan)',
-                        background: 'var(--dark-surface)',
-                        border: '1px solid rgba(0, 255, 255, 0.2)',
-                        borderRadius: '0',
+                        fontFamily: 'Georgia, serif',
+                        color: 'var(--rich-mahogany)',
+                        background: 'var(--paper-white)',
+                        border: '1px solid rgba(139, 115, 85, 0.2)',
+                        borderRadius: '3px',
+                        margin: '2px',
                       }}
                     >
-                      <span style={{ color: 'var(--neon-green)' }}>&gt;</span> Profile Interface
+                      📝 My Profile
                     </NavDropdown.Item>
                   </motion.div>
-                  <motion.div whileHover={{ x: 5, backgroundColor: 'rgba(0, 255, 255, 0.1)' }}>
+                  <motion.div whileHover={{ x: 5, backgroundColor: 'rgba(212, 165, 116, 0.1)' }}>
                     <NavDropdown.Item 
                       as={Link} 
                       to="/notes"
                       style={{
-                        fontFamily: 'Roboto Mono, monospace',
-                        color: 'var(--neon-cyan)',
-                        background: 'var(--dark-surface)',
-                        border: '1px solid rgba(0, 255, 255, 0.2)',
-                        borderRadius: '0',
+                        fontFamily: 'Georgia, serif',
+                        color: 'var(--rich-mahogany)',
+                        background: 'var(--paper-white)',
+                        border: '1px solid rgba(139, 115, 85, 0.2)',
+                        borderRadius: '3px',
+                        margin: '2px',
                       }}
                     >
-                      <span style={{ color: 'var(--neon-green)' }}>&gt;</span> Neural Notes
+                      📔 Study Notes
                     </NavDropdown.Item>
                   </motion.div>
-                  <NavDropdown.Divider style={{ borderColor: 'var(--neon-cyan)' }} />
-                  <motion.div whileHover={{ x: 5, backgroundColor: 'rgba(255, 0, 128, 0.1)' }}>
+                  <NavDropdown.Divider style={{ borderColor: 'var(--study-gold)' }} />
+                  <motion.div whileHover={{ x: 5, backgroundColor: 'rgba(230, 126, 34, 0.1)' }}>
                     <NavDropdown.Item 
                       onClick={handleLogout}
                       style={{
-                        fontFamily: 'Roboto Mono, monospace',
-                        color: 'var(--neon-pink)',
-                        background: 'var(--dark-surface)',
-                        border: '1px solid rgba(255, 0, 128, 0.2)',
-                        borderRadius: '0',
+                        fontFamily: 'Georgia, serif',
+                        color: 'var(--focus-orange)',
+                        background: 'var(--paper-white)',
+                        border: '1px solid rgba(230, 126, 34, 0.2)',
+                        borderRadius: '3px',
+                        margin: '2px',
                       }}
                     >
-                      <span style={{ color: 'var(--neon-pink)' }}>&gt;</span> Disconnect Neural Link
+                      🚪 Leave Studio
                     </NavDropdown.Item>
                   </motion.div>
                 </NavDropdown>
@@ -231,32 +228,28 @@ const Navigation: React.FC = () => {
                     <Nav.Link 
                       as={Link} 
                       to="/login"
-                      className="sci-fi-nav-link"
+                      className="study-nav-link"
                       style={{
-                        fontFamily: 'Orbitron, sans-serif',
-                        color: 'var(--neon-purple)',
-                        textTransform: 'uppercase',
-                        letterSpacing: '1px',
-                        fontSize: '0.9rem',
+                        fontFamily: 'Georgia, serif',
+                        color: 'var(--gentle-blue)',
+                        fontSize: '1rem',
                       }}
                     >
-                      Access Terminal
+                      Enter
                     </Nav.Link>
                   </motion.div>
                   <motion.div whileHover={{ scale: 1.05 }}>
                     <Nav.Link 
                       as={Link} 
                       to="/register"
-                      className="sci-fi-nav-link"
+                      className="study-nav-link"
                       style={{
-                        fontFamily: 'Orbitron, sans-serif',
-                        color: 'var(--neon-green)',
-                        textTransform: 'uppercase',
-                        letterSpacing: '1px',
-                        fontSize: '0.9rem',
+                        fontFamily: 'Georgia, serif',
+                        color: 'var(--study-gold)',
+                        fontSize: '1rem',
                       }}
                     >
-                      Initialize Neural Link
+                      Claim Your Room
                     </Nav.Link>
                   </motion.div>
                 </>

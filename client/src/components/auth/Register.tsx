@@ -1,626 +1,481 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Container, Row, Col, Card, Form, Alert } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Container, Row, Col, Form, Alert } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
-import '../../styles/animations.css';
+import '../../styles/study-theme.css';
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState({
-    username: '',
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
     confirmPassword: '',
-    firstName: '',
-    lastName: '',
-    school: '',
-    yearGroup: 'Year 11'
+    wantsReminders: false
   });
-  
-  const [validationError, setValidationError] = useState('');
-  const [isHovered, setIsHovered] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isAllocating, setIsAllocating] = useState(false);
+  const [allocationStep, setAllocationStep] = useState(0);
   const { register, loading, error } = useAuth();
   const navigate = useNavigate();
-  const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        setMousePosition({
-          x: e.clientX - rect.left,
-          y: e.clientY - rect.top,
-        });
-      }
-    };
+  const allocationSteps = [
+    'Reserving your room...',
+    'Stocking flashcards & notes...',
+    'Personalizing your desk...',
+    'Handover complete — Welcome home.'
+  ];
 
-    document.addEventListener('mousemove', handleMouseMove);
-    return () => document.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     }));
-    setValidationError('');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validation
     if (formData.password !== formData.confirmPassword) {
-      setValidationError('Passwords do not match');
-      return;
-    }
-    
-    if (formData.password.length < 6) {
-      setValidationError('Password must be at least 6 characters long');
+      alert('Passwords do not match');
       return;
     }
 
-    const { confirmPassword, ...userData } = formData;
-    const success = await register(userData);
+    if (formData.password.length < 8) {
+      alert('Try a longer password — 8+ characters.');
+      return;
+    }
+
+    setIsAllocating(true);
     
+    // Simulate room allocation process
+    for (let i = 0; i < allocationSteps.length; i++) {
+      setAllocationStep(i);
+      await new Promise(resolve => setTimeout(resolve, 800));
+    }
+
+    const success = await register({
+      username: formData.email, // Use email as username for now
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      password: formData.password,
+      yearGroup: 'Year 11' // Default year group
+    });
+
     if (success) {
-      navigate('/dashboard');
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 1000);
+    } else {
+      setIsAllocating(false);
     }
   };
 
-  return (
-    <div 
-      ref={containerRef}
-      className="sci-fi-immersive-container"
-    >
-      {/* Circuit Board Background */}
-      <div className="circuit-bg"></div>
-      
-      {/* Holographic Particles */}
-      <div className="hologram-particles"></div>
-      
-      {/* Scanlines Effect */}
-      <div className="scanlines"></div>
-
-      {/* Advanced Sci-Fi Geometric Shapes */}
-      <div className="sci-fi-shapes">
-        {Array.from({ length: 15 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className={i % 4 === 0 ? 'hexagon-shape' : i % 4 === 1 ? 'triangle-shape' : i % 4 === 2 ? 'diamond-shape' : 'hexagon-shape'}
-            style={{
-              left: Math.random() * 100 + '%',
-              top: Math.random() * 100 + '%',
-              filter: `hue-rotate(${Math.random() * 360}deg)`,
-            }}
-            animate={{
-              rotate: [0, 360],
-              scale: [1, 1.3, 1],
-              opacity: [0.1, 0.4, 0.1],
-              x: [0, Math.random() * 50 - 25, 0],
-              y: [0, Math.random() * 50 - 25, 0],
-            }}
-            transition={{
-              duration: Math.random() * 25 + 20,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Enhanced Energy Flow Particles */}
-      <div className="energy-particles">
-        {Array.from({ length: 100 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="energy-particle"
-            style={{
-              left: Math.random() * 100 + '%',
-              background: i % 4 === 0 ? 'var(--neon-cyan)' : 
-                         i % 4 === 1 ? 'var(--neon-purple)' : 
-                         i % 4 === 2 ? 'var(--neon-green)' : 'var(--neon-pink)',
-              boxShadow: `0 0 10px currentColor, 0 0 20px currentColor`,
-              animationDelay: Math.random() * 10 + 's',
-            }}
-            animate={{
-              y: [window.innerHeight, -100],
-              x: [0, Math.random() * 300 - 150],
-              scale: [0, 1.2, 0],
-              rotate: [0, 360],
-            }}
-            transition={{
-              duration: Math.random() * 12 + 8,
-              repeat: Infinity,
-              delay: Math.random() * 8,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Holographic Mouse Follower */}
-      <motion.div
-        style={{
-          position: 'absolute',
-          width: '500px',
-          height: '500px',
-          background: `conic-gradient(from 0deg, 
-            rgba(0, 255, 255, 0.1), 
-            rgba(128, 0, 255, 0.1), 
-            rgba(255, 0, 128, 0.1), 
-            rgba(0, 255, 65, 0.1), 
-            rgba(0, 255, 255, 0.1))`,
-          borderRadius: '50%',
-          pointerEvents: 'none',
-          zIndex: 1,
-          filter: 'blur(2px)',
-        }}
-        animate={{
-          x: mousePosition.x - 250,
-          y: mousePosition.y - 250,
-          rotate: [0, 360],
-        }}
-        transition={{
-          x: { type: "spring", stiffness: 15, damping: 40 },
-          y: { type: "spring", stiffness: 15, damping: 40 },
-          rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-        }}
-      />
-
-      <Container className="py-5" style={{ position: 'relative', zIndex: 10 }}>
-        <Row className="justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
-          <Col xs={12} sm={11} md={9} lg={7} xl={6}>
-            <motion.div
-              initial={{ scale: 0.2, opacity: 0, rotateX: -90, z: -1000 }}
-              animate={{ scale: 1, opacity: 1, rotateX: 0, z: 0 }}
-              transition={{ 
-                type: "spring",
-                stiffness: 50,
-                damping: 20,
-                duration: 2
-              }}
-              onHoverStart={() => setIsHovered(true)}
-              onHoverEnd={() => setIsHovered(false)}
-            >
+  if (isAllocating) {
+    return (
+      <div className="grand-entrance" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
+        <Container>
+          <Row className="justify-content-center">
+            <Col lg={6} md={8} className="text-center">
               <motion.div
-                className="holo-card-3d"
-                style={{
-                  padding: '3.5rem',
-                  position: 'relative',
-                  overflow: 'hidden',
-                }}
-                animate={{
-                  rotateX: isHovered ? 3 : 0,
-                  rotateY: isHovered ? 3 : 0,
-                  scale: isHovered ? 1.01 : 1,
-                }}
-                transition={{ duration: 0.4 }}
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
               >
-                {/* HUD Status Indicators */}
+                {/* Estate Agent Sign */}
                 <motion.div
+                  className="study-room-card mx-auto mb-4"
                   style={{
-                    position: 'absolute',
-                    top: '15px',
-                    left: '15px',
-                    right: '15px',
-                    height: '2px',
-                    background: 'var(--success-gradient)',
-                    borderRadius: '1px',
+                    width: '400px',
+                    padding: '2rem',
+                    background: 'var(--paper-white)',
                   }}
-                  animate={{
-                    scaleX: [0, 1, 0],
-                    opacity: [0, 1, 0],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-
-                <Card.Body style={{ position: 'relative', zIndex: 2, padding: 0 }}>
-                  <motion.div
-                    initial={{ y: -40, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.3, duration: 0.9 }}
-                    className="text-center mb-5"
-                  >
-                    <motion.h2 
-                      className="sci-fi-hero-title glitch-text"
-                      data-text="USER REGISTRATION"
-                      style={{ 
-                        fontSize: '2.8rem',
-                        fontWeight: '900',
-                        marginBottom: '0.5rem',
-                        fontFamily: 'Orbitron, sans-serif',
-                      }}
-                    >
-                      USER REGISTRATION
-                    </motion.h2>
-                    <motion.div
+                  animate={{ rotateY: [0, 5, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🏠</div>
+                  <h3 style={{ color: 'var(--rich-mahogany)', fontFamily: 'Georgia, serif' }}>
+                    Allocating your study room
+                  </h3>
+                  <p style={{ color: 'var(--soft-brown)', fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+                    Housing is free
+                  </p>
+                  
+                  {/* Progress Map */}
+                  <div style={{ margin: '2rem 0' }}>
+                    <div 
                       style={{
-                        color: 'var(--neon-green)',
-                        fontSize: '1rem',
-                        fontFamily: 'Roboto Mono, monospace',
-                        marginBottom: '0.5rem',
-                      }}
-                      animate={{
-                        opacity: [1, 0.5, 1],
-                      }}
-                      transition={{
-                        duration: 2.5,
-                        repeat: Infinity,
+                        background: 'var(--warm-beige)',
+                        height: '20px',
+                        borderRadius: '10px',
+                        border: '2px solid var(--study-gold)',
+                        overflow: 'hidden',
+                        position: 'relative'
                       }}
                     >
-                      &gt; INITIALIZING NEURAL INTERFACE...
-                    </motion.div>
-                    <motion.p
-                      style={{ 
-                        color: 'var(--neon-cyan)',
-                        fontSize: '1.2rem',
-                        marginBottom: 0,
-                        fontFamily: 'Roboto Mono, monospace',
-                      }}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.6, duration: 0.9 }}
-                    >
-                      Establish Connection to GCSE Neural Network
-                    </motion.p>
-                  </motion.div>
-                  
-                  <AnimatePresence>
-                    {(error || validationError) && (
                       <motion.div
-                        initial={{ x: -30, opacity: 0, scale: 0.8 }}
-                        animate={{ x: 0, opacity: 1, scale: 1 }}
-                        exit={{ x: 30, opacity: 0, scale: 0.8 }}
-                        transition={{ duration: 0.5 }}
-                        style={{ marginBottom: '2rem' }}
-                      >
-                        <Alert 
-                          variant="danger" 
-                          className="terminal"
-                          style={{
-                            background: 'rgba(255, 0, 128, 0.1)',
-                            border: '2px solid var(--neon-pink)',
-                            color: 'var(--neon-pink)',
-                            borderRadius: '0',
-                            fontFamily: 'Roboto Mono, monospace',
-                          }}
-                        >
-                          NEURAL_ERROR: {error || validationError}
-                        </Alert>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                  
+                        style={{
+                          background: 'var(--study-primary)',
+                          height: '100%',
+                          borderRadius: '8px',
+                        }}
+                        initial={{ width: '0%' }}
+                        animate={{ width: `${((allocationStep + 1) / allocationSteps.length) * 100}%` }}
+                        transition={{ duration: 0.6 }}
+                      />
+                    </div>
+                    <p style={{ 
+                      color: 'var(--rich-mahogany)', 
+                      fontFamily: 'Georgia, serif',
+                      marginTop: '1rem',
+                      fontSize: '1.1rem'
+                    }}>
+                      {allocationSteps[allocationStep]}
+                    </p>
+                    <p style={{ 
+                      color: 'var(--soft-brown)', 
+                      fontFamily: 'Georgia, serif',
+                      fontSize: '0.9rem'
+                    }}>
+                      {Math.round(((allocationStep + 1) / allocationSteps.length) * 100)}% complete
+                    </p>
+                  </div>
+                </motion.div>
+
+                <motion.p
+                  style={{
+                    color: 'var(--deep-forest)',
+                    fontFamily: 'Georgia, serif',
+                    fontStyle: 'italic',
+                    fontSize: '1.1rem'
+                  }}
+                  animate={{ opacity: [1, 0.7, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  Allocating your study room. Housing is free — we'll set it up with your top topics right now.
+                </motion.p>
+              </motion.div>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    );
+  }
+
+  return (
+    <div className="grand-entrance" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
+      <Container>
+        <Row className="justify-content-center">
+          <Col lg={8} md={10}>
+            <motion.div
+              initial={{ x: 100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-4"
+            >
+              {/* Estate Agent Sign */}
+              <motion.div
+                style={{
+                  display: 'inline-block',
+                  background: 'var(--study-wood)',
+                  padding: '1rem 2rem',
+                  borderRadius: '10px',
+                  border: '3px solid var(--study-gold)',
+                  color: 'var(--paper-white)',
+                  fontFamily: 'Georgia, serif',
+                  marginBottom: '2rem',
+                  transform: 'rotate(-2deg)',
+                }}
+                whileHover={{ rotate: 0, scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🏠</div>
+                <div style={{ fontSize: '1.2rem', fontWeight: '600' }}>Create account — housing is free</div>
+                <div style={{ fontSize: '0.9rem', fontStyle: 'italic', opacity: 0.9 }}>
+                  Personalize and sync across devices
+                </div>
+              </motion.div>
+            </motion.div>
+
+            <Row>
+              <Col lg={6}>
+                <motion.div
+                  className="study-room-card"
+                  style={{ padding: '2rem', background: 'var(--paper-white)' }}
+                  initial={{ x: -50, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                >
+                  <h3 style={{ 
+                    color: 'var(--rich-mahogany)', 
+                    fontFamily: 'Georgia, serif',
+                    marginBottom: '1rem'
+                  }}>
+                    Claim your study room
+                  </h3>
+                  <p style={{ 
+                    color: 'var(--soft-brown)', 
+                    fontFamily: 'Georgia, serif',
+                    marginBottom: '1.5rem'
+                  }}>
+                    Housing is free. Personalize and sync across devices.
+                  </p>
+
+                  {error && (
+                    <Alert 
+                      variant="danger"
+                      style={{
+                        background: 'rgba(230, 126, 34, 0.1)',
+                        border: '1px solid var(--focus-orange)',
+                        color: 'var(--focus-orange)'
+                      }}
+                    >
+                      {error}
+                    </Alert>
+                  )}
+
                   <Form onSubmit={handleSubmit}>
                     <Row>
                       <Col md={6}>
-                        <motion.div
-                          initial={{ x: -60, opacity: 0 }}
-                          animate={{ x: 0, opacity: 1 }}
-                          transition={{ delay: 0.4, duration: 0.9 }}
-                          style={{ marginBottom: '2rem' }}
-                        >
-                          <Form.Group>
-                            <motion.label
-                              className="sci-fi-label"
-                              style={{ 
-                                display: 'block',
-                                marginBottom: '0.75rem',
-                              }}
-                              animate={{ x: formData.firstName ? 10 : 0 }}
-                              transition={{ duration: 0.3 }}
-                            >
-                              First Name
-                            </motion.label>
-                            <motion.div whileFocus={{ scale: 1.02 }}>
-                              <Form.Control
-                                type="text"
-                                name="firstName"
-                                placeholder="neural.user.001"
-                                value={formData.firstName}
-                                onChange={handleChange}
-                                required
-                                className="sci-fi-form-control"
-                                style={{
-                                  padding: '16px 22px',
-                                  fontSize: '1.1rem',
-                                  transition: 'all 0.3s ease',
-                                }}
-                              />
-                            </motion.div>
-                          </Form.Group>
-                        </motion.div>
-                      </Col>
-                      <Col md={6}>
-                        <motion.div
-                          initial={{ x: 60, opacity: 0 }}
-                          animate={{ x: 0, opacity: 1 }}
-                          transition={{ delay: 0.5, duration: 0.9 }}
-                          style={{ marginBottom: '2rem' }}
-                        >
-                          <Form.Group>
-                            <motion.label
-                              className="sci-fi-label"
-                              style={{ 
-                                display: 'block',
-                                marginBottom: '0.75rem',
-                              }}
-                              animate={{ x: formData.lastName ? 10 : 0 }}
-                              transition={{ duration: 0.3 }}
-                            >
-                              Last Name
-                            </motion.label>
-                            <motion.div whileFocus={{ scale: 1.02 }}>
-                              <Form.Control
-                                type="text"
-                                name="lastName"
-                                placeholder="interface.handler"
-                                value={formData.lastName}
-                                onChange={handleChange}
-                                required
-                                className="sci-fi-form-control"
-                                style={{
-                                  padding: '16px 22px',
-                                  fontSize: '1.1rem',
-                                  transition: 'all 0.3s ease',
-                                }}
-                              />
-                            </motion.div>
-                          </Form.Group>
-                        </motion.div>
-                      </Col>
-                    </Row>
-
-                    <motion.div
-                      initial={{ x: -60, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: 0.6, duration: 0.9 }}
-                      style={{ marginBottom: '2rem' }}
-                    >
-                      <Form.Group>
-                        <motion.label
-                          className="sci-fi-label"
-                          style={{ 
-                            display: 'block',
-                            marginBottom: '0.75rem',
-                          }}
-                          animate={{ x: formData.username ? 10 : 0 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          Neural ID
-                        </motion.label>
-                        <motion.div whileFocus={{ scale: 1.02 }}>
+                        <Form.Group className="mb-3">
+                          <Form.Label style={{ color: 'var(--rich-mahogany)', fontFamily: 'Georgia, serif' }}>
+                            First Name
+                          </Form.Label>
                           <Form.Control
                             type="text"
-                            name="username"
-                            placeholder="neural_id_unique"
-                            value={formData.username}
+                            name="firstName"
+                            value={formData.firstName}
                             onChange={handleChange}
                             required
-                            className="sci-fi-form-control"
+                            className="study-paper"
                             style={{
-                              padding: '16px 22px',
-                              fontSize: '1.1rem',
-                              transition: 'all 0.3s ease',
+                              background: 'var(--paper-white)',
+                              border: '1px solid var(--soft-brown)',
+                              borderRadius: '5px',
+                              fontFamily: 'Georgia, serif'
                             }}
                           />
-                        </motion.div>
-                      </Form.Group>
-                    </motion.div>
-
-                    <motion.div
-                      initial={{ x: 60, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: 0.7, duration: 0.9 }}
-                      style={{ marginBottom: '2rem' }}
-                    >
-                      <Form.Group>
-                        <motion.label
-                          className="sci-fi-label"
-                          style={{ 
-                            display: 'block',
-                            marginBottom: '0.75rem',
-                          }}
-                          animate={{ x: formData.email ? 10 : 0 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          Communication Channel
-                        </motion.label>
-                        <motion.div whileFocus={{ scale: 1.02 }}>
-                          <Form.Control
-                            type="email"
-                            name="email"
-                            placeholder="user@neural.network"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                            className="sci-fi-form-control"
-                            style={{
-                              padding: '16px 22px',
-                              fontSize: '1.1rem',
-                              transition: 'all 0.3s ease',
-                            }}
-                          />
-                        </motion.div>
-                      </Form.Group>
-                    </motion.div>
-
-                    <Row>
-                      <Col md={6}>
-                        <motion.div
-                          initial={{ x: -60, opacity: 0 }}
-                          animate={{ x: 0, opacity: 1 }}
-                          transition={{ delay: 0.8, duration: 0.9 }}
-                          style={{ marginBottom: '2rem' }}
-                        >
-                          <Form.Group>
-                            <motion.label
-                              className="sci-fi-label"
-                              style={{ 
-                                display: 'block',
-                                marginBottom: '0.75rem',
-                              }}
-                              animate={{ x: formData.password ? 10 : 0 }}
-                              transition={{ duration: 0.3 }}
-                            >
-                              Security Protocol
-                            </motion.label>
-                            <motion.div whileFocus={{ scale: 1.02 }}>
-                              <Form.Control
-                                type="password"
-                                name="password"
-                                placeholder="••••••••••••••••"
-                                value={formData.password}
-                                onChange={handleChange}
-                                required
-                                className="sci-fi-form-control"
-                                style={{
-                                  padding: '16px 22px',
-                                  fontSize: '1.1rem',
-                                  transition: 'all 0.3s ease',
-                                }}
-                              />
-                            </motion.div>
-                          </Form.Group>
-                        </motion.div>
+                        </Form.Group>
                       </Col>
                       <Col md={6}>
-                        <motion.div
-                          initial={{ x: 60, opacity: 0 }}
-                          animate={{ x: 0, opacity: 1 }}
-                          transition={{ delay: 0.9, duration: 0.9 }}
-                          style={{ marginBottom: '2rem' }}
-                        >
-                          <Form.Group>
-                            <motion.label
-                              className="sci-fi-label"
-                              style={{ 
-                                display: 'block',
-                                marginBottom: '0.75rem',
-                              }}
-                              animate={{ x: formData.confirmPassword ? 10 : 0 }}
-                              transition={{ duration: 0.3 }}
-                            >
-                              Verify Protocol
-                            </motion.label>
-                            <motion.div whileFocus={{ scale: 1.02 }}>
-                              <Form.Control
-                                type="password"
-                                name="confirmPassword"
-                                placeholder="••••••••••••••••"
-                                value={formData.confirmPassword}
-                                onChange={handleChange}
-                                required
-                                className="sci-fi-form-control"
-                                style={{
-                                  padding: '16px 22px',
-                                  fontSize: '1.1rem',
-                                  transition: 'all 0.3s ease',
-                                }}
-                              />
-                            </motion.div>
-                          </Form.Group>
-                        </motion.div>
+                        <Form.Group className="mb-3">
+                          <Form.Label style={{ color: 'var(--rich-mahogany)', fontFamily: 'Georgia, serif' }}>
+                            Last Name
+                          </Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="lastName"
+                            value={formData.lastName}
+                            onChange={handleChange}
+                            required
+                            className="study-paper"
+                            style={{
+                              background: 'var(--paper-white)',
+                              border: '1px solid var(--soft-brown)',
+                              borderRadius: '5px',
+                              fontFamily: 'Georgia, serif'
+                            }}
+                          />
+                        </Form.Group>
                       </Col>
                     </Row>
 
-                    <motion.div
-                      initial={{ y: 60, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 1.0, duration: 0.9 }}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      style={{ marginBottom: '2rem' }}
-                    >
-                      <motion.button
-                        className="w-100 holo-btn"
-                        type="submit"
-                        disabled={loading}
-                        style={{ 
-                          padding: '18px 35px',
-                          fontSize: '1.2rem',
-                          fontWeight: '700',
-                          position: 'relative',
-                          overflow: 'hidden',
+                    <Form.Group className="mb-3">
+                      <Form.Label style={{ color: 'var(--rich-mahogany)', fontFamily: 'Georgia, serif' }}>
+                        Email
+                      </Form.Label>
+                      <Form.Control
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        className="study-paper"
+                        style={{
+                          background: 'var(--paper-white)',
+                          border: '1px solid var(--soft-brown)',
+                          borderRadius: '5px',
+                          fontFamily: 'Georgia, serif'
                         }}
-                        animate={{
-                          boxShadow: loading 
-                            ? '0 8px 20px rgba(0, 0, 0, 0.2)' 
-                            : '0 15px 35px var(--neon-green)',
+                        placeholder="Please enter a valid email"
+                      />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label style={{ color: 'var(--rich-mahogany)', fontFamily: 'Georgia, serif' }}>
+                        Create Password
+                      </Form.Label>
+                      <Form.Control
+                        type="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                        className="study-paper"
+                        style={{
+                          background: 'var(--paper-white)',
+                          border: '1px solid var(--soft-brown)',
+                          borderRadius: '5px',
+                          fontFamily: 'Georgia, serif'
                         }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        {loading ? (
-                          <motion.div
-                            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                          >
-                            <div className="sci-fi-spinner me-3" style={{ width: '20px', height: '20px' }}></div>
-                            <span>ESTABLISHING NEURAL LINK...</span>
-                          </motion.div>
-                        ) : (
-                          <motion.span
-                            className="neon-text"
-                            style={{
-                              fontFamily: 'Orbitron, sans-serif',
-                              letterSpacing: '2px',
-                              color: 'var(--neon-green)',
-                            }}
-                          >
-                            INITIALIZE INTERFACE
-                          </motion.span>
-                        )}
-                      </motion.button>
-                    </motion.div>
+                        placeholder="8+ characters required"
+                      />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label style={{ color: 'var(--rich-mahogany)', fontFamily: 'Georgia, serif' }}>
+                        Confirm Password
+                      </Form.Label>
+                      <Form.Control
+                        type="password"
+                        name="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                        required
+                        className="study-paper"
+                        style={{
+                          background: 'var(--paper-white)',
+                          border: '1px solid var(--soft-brown)',
+                          borderRadius: '5px',
+                          fontFamily: 'Georgia, serif'
+                        }}
+                      />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Check
+                        type="checkbox"
+                        name="wantsReminders"
+                        checked={formData.wantsReminders}
+                        onChange={handleChange}
+                        label="Yes — I'd like reminders & progress emails (optional)"
+                        style={{ color: 'var(--soft-brown)', fontFamily: 'Georgia, serif' }}
+                      />
+                    </Form.Group>
+
+                    <div className="d-grid gap-2 mb-3">
+                      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                        <button
+                          type="submit"
+                          className="btn btn-study"
+                          disabled={loading}
+                          style={{
+                            background: 'var(--study-primary)',
+                            border: '2px solid var(--rich-mahogany)',
+                            fontFamily: 'Georgia, serif',
+                            fontWeight: '600',
+                            fontSize: '1.1rem',
+                            padding: '12px'
+                          }}
+                        >
+                          {loading ? 'Creating Account...' : 'Claim my room (free)'}
+                        </button>
+                      </motion.div>
+
+                      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                        <button
+                          className="btn btn-outline-secondary"
+                          onClick={() => navigate('/dashboard')}
+                          style={{
+                            borderColor: 'var(--cozy-amber)',
+                            color: 'var(--cozy-amber)',
+                            fontFamily: 'Georgia, serif',
+                          }}
+                        >
+                          Continue as Guest
+                        </button>
+                      </motion.div>
+                    </div>
+
+                    <div className="text-center">
+                      <p style={{ color: 'var(--soft-brown)', fontSize: '0.9rem', fontFamily: 'Georgia, serif' }}>
+                        Already have an account?{' '}
+                        <Link 
+                          to="/login" 
+                          style={{ 
+                            color: 'var(--study-gold)', 
+                            textDecoration: 'none',
+                            fontWeight: '600'
+                          }}
+                        >
+                          Enter your studio
+                        </Link>
+                      </p>
+                      <p style={{ 
+                        color: 'var(--soft-brown)', 
+                        fontSize: '0.8rem', 
+                        fontFamily: 'Georgia, serif',
+                        fontStyle: 'italic',
+                        marginTop: '1rem'
+                      }}>
+                        We'll never rent your data — privacy first.
+                      </p>
+                    </div>
                   </Form>
-                  
-                  <motion.div
-                    initial={{ y: 40, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 1.1, duration: 0.9 }}
-                    className="text-center"
+                </motion.div>
+              </Col>
+
+              <Col lg={6}>
+                <motion.div
+                  initial={{ x: 50, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                >
+                  {/* Study Room Preview */}
+                  <div 
+                    className="study-room-card"
+                    style={{ 
+                      padding: '2rem', 
+                      background: 'var(--warm-beige)',
+                      textAlign: 'center'
+                    }}
                   >
-                    <p style={{ 
-                      color: 'var(--neon-cyan)', 
-                      fontSize: '1.05rem',
-                      fontFamily: 'Roboto Mono, monospace',
-                    }}>
-                      Neural interface already active?{' '}
-                      <Link 
-                        to="/login" 
-                        style={{ 
-                          color: 'var(--neon-purple)',
-                          textDecoration: 'none',
-                          fontWeight: '600',
-                          borderBottom: '1px solid transparent',
-                          transition: 'all 0.3s ease',
-                          fontFamily: 'Orbitron, sans-serif',
-                          textTransform: 'uppercase',
-                          letterSpacing: '1px',
-                        }}
-                        onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                          const target = e.target as HTMLAnchorElement;
-                          target.style.borderBottomColor = 'var(--neon-purple)';
-                          target.style.textShadow = '0 0 15px var(--neon-purple)';
-                        }}
-                        onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                          const target = e.target as HTMLAnchorElement;
-                          target.style.borderBottomColor = 'transparent';
-                          target.style.textShadow = 'none';
-                        }}
-                      >
-                        Access Terminal
-                      </Link>
+                    <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🏠</div>
+                    <h4 style={{ color: 'var(--rich-mahogany)', fontFamily: 'Georgia, serif' }}>
+                      Your Study Studio Preview
+                    </h4>
+                    <p style={{ color: 'var(--soft-brown)', fontFamily: 'Georgia, serif', fontSize: '0.9rem' }}>
+                      Your free study room will include:
                     </p>
-                  </motion.div>
-                </Card.Body>
-              </motion.div>
-            </motion.div>
+                    
+                    <div style={{ textAlign: 'left', margin: '1.5rem 0' }}>
+                      {[
+                        '📚 Personal study desk with materials',
+                        '📝 Synchronized notes across devices',
+                        '🎯 Customized practice tests',
+                        '📊 Progress tracking and analytics',
+                        '🔄 Automatic cloud backup'
+                      ].map((feature, index) => (
+                        <motion.div
+                          key={index}
+                          style={{
+                            color: 'var(--deep-forest)',
+                            fontFamily: 'Georgia, serif',
+                            marginBottom: '0.5rem',
+                            fontSize: '0.9rem'
+                          }}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.6 + (index * 0.1) }}
+                        >
+                          {feature}
+                        </motion.div>
+                      ))}
+                    </div>
+
+                    <p style={{ 
+                      color: 'var(--study-gold)', 
+                      fontFamily: 'Georgia, serif',
+                      fontWeight: '600',
+                      fontStyle: 'italic'
+                    }}>
+                      All completely free forever!
+                    </p>
+                  </div>
+                </motion.div>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Container>
