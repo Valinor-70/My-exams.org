@@ -6,9 +6,24 @@ import Home from './pages/Home';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Dashboard from './pages/Dashboard';
-import SubjectPage from './pages/SubjectPage';
 import TestPage from './components/test/TestPage';
 import FlashcardPage from './components/test/FlashcardPage';
+
+// Import individual subject pages
+import {
+  MathematicsPage,
+  BiologyPage,
+  ChemistryPage,
+  PhysicsPage,
+  ComputerSciencePage,
+  EnglishLiteraturePage,
+  EnglishLanguagePage,
+  GeographyPage,
+  GeologyPage,
+  HistoryPage,
+  ReligiousEducationPage
+} from './pages/subjects';
+
 import './App.css';
 import './styles/study-theme.css';
 
@@ -25,7 +40,21 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/subjects" element={<Navigate to="/dashboard" replace />} />
-              <Route path="/subjects/:subjectCode" element={<SubjectPage />} />
+              
+              {/* Individual subject pages */}
+              <Route path="/subjects/mathematics" element={<MathematicsPage />} />
+              <Route path="/subjects/biology" element={<BiologyPage />} />
+              <Route path="/subjects/chemistry" element={<ChemistryPage />} />
+              <Route path="/subjects/physics" element={<PhysicsPage />} />
+              <Route path="/subjects/computer-science" element={<ComputerSciencePage />} />
+              <Route path="/subjects/english-lit" element={<EnglishLiteraturePage />} />
+              <Route path="/subjects/english-lang" element={<EnglishLanguagePage />} />
+              <Route path="/subjects/geography" element={<GeographyPage />} />
+              <Route path="/subjects/geology" element={<GeologyPage />} />
+              <Route path="/subjects/history" element={<HistoryPage />} />
+              <Route path="/subjects/religious-education" element={<ReligiousEducationPage />} />
+              
+              {/* Test and flashcard routes */}
               <Route path="/test/:subjectCode" element={<TestPage />} />
               <Route path="/test/:subjectCode/:topicId" element={<TestPage />} />
               <Route path="/flashcards/:subjectCode" element={<FlashcardPage />} />
