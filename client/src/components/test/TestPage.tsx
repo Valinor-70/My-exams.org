@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button, ProgressBar, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Card, ProgressBar, Alert } from 'react-bootstrap';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -34,7 +34,7 @@ const TestPage: React.FC = () => {
   const [timeRemaining, setTimeRemaining] = useState(1800); // 30 minutes
 
   // Mock questions data - in real app would come from API
-  const generateQuestions = (subject: string, topic?: string): Question[] => {
+  const generateQuestions = (subject: string): Question[] => {
     const questionBank: { [key: string]: Question[] } = {
       'mathematics': [
         {
@@ -152,7 +152,7 @@ const TestPage: React.FC = () => {
 
   useEffect(() => {
     if (subjectCode) {
-      const generatedQuestions = generateQuestions(subjectCode, topicId);
+      const generatedQuestions = generateQuestions(subjectCode);
       setQuestions(generatedQuestions);
     }
   }, [subjectCode, topicId]);
@@ -229,9 +229,12 @@ const TestPage: React.FC = () => {
         <Alert variant="info">
           <h4>Test Coming Soon!</h4>
           <p>We're preparing questions for this topic. Please check back later.</p>
-          <Button variant="primary" onClick={() => navigate(-1)}>
+          <button 
+            className="btn btn-primary" 
+            onClick={() => navigate(-1)}
+          >
             Go Back
-          </Button>
+          </button>
         </Alert>
       </Container>
     );
@@ -305,24 +308,24 @@ const TestPage: React.FC = () => {
                   </div>
 
                   <div className="d-grid gap-2 d-md-flex justify-content-md-center">
-                    <Button 
-                      variant="primary" 
+                    <button 
+                      className="btn btn-primary" 
                       onClick={() => window.location.reload()}
                     >
                       Retake Test
-                    </Button>
-                    <Button 
-                      variant="outline-primary" 
+                    </button>
+                    <button 
+                      className="btn btn-outline-primary" 
                       onClick={() => navigate(`/subjects/${subjectCode}`)}
                     >
                       Back to Subject
-                    </Button>
-                    <Button 
-                      variant="outline-secondary" 
+                    </button>
+                    <button 
+                      className="btn btn-outline-secondary" 
                       onClick={() => navigate('/dashboard')}
                     >
                       Dashboard
-                    </Button>
+                    </button>
                   </div>
                 </Card.Body>
               </Card>
@@ -391,14 +394,15 @@ const TestPage: React.FC = () => {
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                         >
-                          <Button
-                            variant={selectedAnswers[currentQuestion.id] === index ? 'primary' : 'outline-primary'}
-                            className="text-start p-3 w-100"
+                          <button
+                            className={`btn w-100 text-start p-3 ${
+                              selectedAnswers[currentQuestion.id] === index ? 'btn-primary' : 'btn-outline-primary'
+                            }`}
                             style={{ borderRadius: '10px' }}
                             onClick={() => handleAnswerSelect(currentQuestion.id, index)}
                           >
                             <strong>{String.fromCharCode(65 + index)}.</strong> {option}
-                          </Button>
+                          </button>
                         </motion.div>
                       ))}
                     </div>
@@ -412,13 +416,13 @@ const TestPage: React.FC = () => {
               <Card.Body>
                 <Row className="align-items-center">
                   <Col>
-                    <Button
-                      variant="outline-secondary"
+                    <button
+                      className="btn btn-outline-secondary"
                       onClick={handlePreviousQuestion}
                       disabled={currentQuestionIndex === 0}
                     >
                       ← Previous
-                    </Button>
+                    </button>
                   </Col>
                   <Col className="text-center">
                     <small className="text-muted">
@@ -427,20 +431,20 @@ const TestPage: React.FC = () => {
                   </Col>
                   <Col className="text-end">
                     {currentQuestionIndex === questions.length - 1 ? (
-                      <Button
-                        variant="success"
+                      <button
+                        className="btn btn-success"
                         onClick={handleFinishTest}
                         disabled={Object.keys(selectedAnswers).length !== questions.length}
                       >
                         Finish Test ✓
-                      </Button>
+                      </button>
                     ) : (
-                      <Button
-                        variant="primary"
+                      <button
+                        className="btn btn-primary"
                         onClick={handleNextQuestion}
                       >
                         Next →
-                      </Button>
+                      </button>
                     )}
                   </Col>
                 </Row>

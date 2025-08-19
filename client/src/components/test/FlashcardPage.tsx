@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button, Badge, ProgressBar } from 'react-bootstrap';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Container, Row, Col, Card, Badge, ProgressBar } from 'react-bootstrap';
+import { motion } from 'framer-motion';
 import { useParams, useNavigate } from 'react-router-dom';
 
 interface FlashcardData {
@@ -255,9 +255,9 @@ const FlashcardPage: React.FC = () => {
           <Card.Body className="p-5">
             <h4>📚 Flashcards Coming Soon!</h4>
             <p className="text-muted">We're preparing flashcards for this subject. Please check back later.</p>
-            <Button variant="primary" onClick={() => navigate(-1)}>
+            <button className="btn btn-primary" onClick={() => navigate(-1)}>
               Go Back
-            </Button>
+            </button>
           </Card.Body>
         </Card>
       </Container>
@@ -383,37 +383,35 @@ const FlashcardPage: React.FC = () => {
                   <Card.Body>
                     <Row className="align-items-center">
                       <Col>
-                        <Button
-                          variant="outline-secondary"
+                        <button
+                          className="btn btn-outline-secondary"
                           onClick={handlePrevious}
                           disabled={currentCardIndex === 0}
                         >
                           ← Previous
-                        </Button>
+                        </button>
                       </Col>
                       
                       {isFlipped && (
                         <Col className="text-center">
                           <div className="d-flex justify-content-center gap-2">
                             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                              <Button
-                                variant="outline-danger"
-                                size="sm"
+                              <button
+                                className="btn btn-outline-danger btn-sm"
                                 onClick={handleMarkReview}
                                 disabled={reviewCards.has(currentCard.id)}
                               >
                                 📚 Need Review
-                              </Button>
+                              </button>
                             </motion.div>
                             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                              <Button
-                                variant="outline-success"
-                                size="sm"
+                              <button
+                                className="btn btn-outline-success btn-sm"
                                 onClick={handleMarkKnown}
                                 disabled={knownCards.has(currentCard.id)}
                               >
                                 ✅ I Know This
-                              </Button>
+                              </button>
                             </motion.div>
                           </div>
                         </Col>
@@ -421,19 +419,19 @@ const FlashcardPage: React.FC = () => {
                       
                       <Col className="text-end">
                         {currentCardIndex === flashcards.length - 1 ? (
-                          <Button
-                            variant="success"
+                          <button
+                            className="btn btn-success"
                             onClick={() => navigate(`/subjects/${subjectCode}`)}
                           >
                             Complete ✓
-                          </Button>
+                          </button>
                         ) : (
-                          <Button
-                            variant="primary"
+                          <button
+                            className="btn btn-primary"
                             onClick={handleNext}
                           >
                             Next →
-                          </Button>
+                          </button>
                         )}
                       </Col>
                     </Row>
